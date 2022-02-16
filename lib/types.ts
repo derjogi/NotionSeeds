@@ -12,6 +12,7 @@ export interface PageProps {
   recordMap?: ExtendedRecordMap
   pageId?: string
   error?: PageError
+  links?: any
 }
 
 export interface Model {

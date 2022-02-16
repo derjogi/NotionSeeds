@@ -9,6 +9,13 @@
   "engines": {
     "node": ">=10"
   },
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false,
+    "net": false,
+    "tls": false
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -45,6 +52,7 @@
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
     "react-notion-x": "^4.11.0",
+    "react-pro-sidebar": "^0.7.1",
     "react-static-tweets": "^0.5.3",
     "react-use": "^17.2.4",
     "static-tweets": "^0.5.3",

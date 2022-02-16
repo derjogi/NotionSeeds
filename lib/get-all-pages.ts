@@ -19,9 +19,10 @@ export async function getAllPagesImpl(
     rootNotionSpaceId,
     notion.getPage.bind(notion)
   )
-
+  console.log('Somehow running code on get-all-pages. How? Where? What?')
   const canonicalPageMap = Object.keys(pageMap).reduce(
     (map, pageId: string) => {
+      console.log('Doing some page stuff for ' + pageId)
       const recordMap = pageMap[pageId]
       if (!recordMap) {
         throw new Error(`Error loading page "${pageId}"`)

@@ -7,5 +7,28 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 module.exports = withBundleAnalyzer({
   images: {
     domains: ['pbs.twimg.com']
-  }
+  },
+  // webpack: (config, { isServer }) => {
+  //   // Fixes npm packages that depend on `fs` module
+  //   if (!isServer) {
+  //     config.resolve.fallback = {
+  //       fs: false,
+  //       stream: false,
+  //       crypto: false,
+  //       path: false,
+  //       net: false,
+  //       dns: false,
+  //       os: false,
+  //       zlib: false,
+  //       tls: false,
+  //       https: false,
+  //       http: false,
+  //       http2: false,
+  //       util: false,
+  //       child_process: false
+  //     };
+  //   }
+  //
+  //   return config;
+  // }
 })

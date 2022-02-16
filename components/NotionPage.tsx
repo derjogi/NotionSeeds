@@ -23,11 +23,11 @@ import { getPageTweet } from 'lib/get-page-tweet'
 import { searchNotion } from 'lib/search-notion'
 import * as types from 'lib/types'
 import * as config from 'lib/config'
-
 // components
 import { CustomFont } from './CustomFont'
 import { Loading } from './Loading'
 import { Page404 } from './Page404'
+import { Navigation } from './Navigation'
 import { PageHead } from './PageHead'
 import { PageActions } from './PageActions'
 import { Footer } from './Footer'
@@ -76,7 +76,8 @@ export const NotionPage: React.FC<types.PageProps> = ({
   site,
   recordMap,
   error,
-  pageId
+  pageId,
+  links
 }) => {
   const router = useRouter()
   const lite = useSearchParam('lite')
@@ -120,6 +121,13 @@ export const NotionPage: React.FC<types.PageProps> = ({
   }
 
   const siteMapPageUrl = mapPageUrl(site, recordMap, searchParams)
+
+  // Todo: This following shouldn't be here (in browser-code) but instead should only be executed server-side.
+  //  ... how to do that? Where to put it? (It ... kinda does work, but has errors.)
+  // console.log('siteMapPageUrl: ', siteMapPageUrl)
+  // getAllPages(pageId, undefined).then((allPages) =>
+  //   console.log('AllPages: ', allPages)
+  // )
 
   const canonicalPageUrl =
     !config.isDev && getCanonicalPageUrl(site, recordMap)(pageId)
@@ -214,6 +222,7 @@ export const NotionPage: React.FC<types.PageProps> = ({
 
         <title>{title}</title>
       </Head>
+      <Navigation collapsed={false} links={links} />
 
       <CustomFont site={site} />
 

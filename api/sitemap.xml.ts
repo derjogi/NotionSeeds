@@ -9,11 +9,13 @@ export default async (
   res: NextApiResponse
 ): Promise<void> => {
   if (req.method !== 'GET') {
+    console.log('Invalid: Trying to get sitemap with ' + req.method)
     return res.status(405).send({ error: 'method not allowed' })
   }
 
   const siteMaps = await getSiteMaps()
 
+  console.log('Got sitemaps: ', siteMaps)
   // cache sitemap for up to one hour
   res.setHeader(
     'Cache-Control',
