@@ -1,4 +1,4 @@
-import { ExtendedRecordMap, PageMap } from 'notion-types'
+import { BaseBlock, ExtendedRecordMap, PageBlock, PageMap } from 'notion-types'
 
 export * from 'notion-types'
 
@@ -12,7 +12,7 @@ export interface PageProps {
   recordMap?: ExtendedRecordMap
   pageId?: string
   error?: PageError
-  links?: any
+  blocks?: BaseBlock[]
 }
 
 export interface Model {

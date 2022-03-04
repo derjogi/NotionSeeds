@@ -2,22 +2,27 @@ import React from 'react'
 import { domain } from 'lib/config'
 import { resolveNotionPage } from 'lib/resolve-notion-page'
 import { NotionPage } from 'components'
-import { getAllPages } from 'lib/get-all-pages'
-import * as config from 'lib/config'
+import { getBlocksForSubPages } from '../lib/notion'
+import { parsePageId } from 'notion-utils'
 
+// noinspection JSUnusedGlobalSymbols
 export const getStaticProps = async () => {
   try {
-    const notionPageStuff = await resolveNotionPage(domain)
-    const links = await getAllPages(
-      config.rootNotionPageId,
-      config.rootNotionSpaceId
+    const mainNotionPage = await resolveNotionPage(domain)
+    const blocks = await getBlocksForSubPages(
+      parsePageId('5507b637e0a349a4b722041e82b81d04')
     )
+    // const siteMap = await getSiteMaps()[0]
+    // const subPages = siteMap.canonicalPageMap
+    console.log('SubPages from index: ', blocks)
+
+    const props = {
+      ...mainNotionPage,
+      blocks
+    }
 
     return {
-      props: {
-        notionPageStuff,
-        links
-      },
+      props,
       revalidate: 10
     }
   } catch (err) {

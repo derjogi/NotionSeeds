@@ -77,7 +77,7 @@ export const NotionPage: React.FC<types.PageProps> = ({
   recordMap,
   error,
   pageId,
-  links
+  blocks
 }) => {
   const router = useRouter()
   const lite = useSearchParam('lite')
@@ -109,7 +109,8 @@ export const NotionPage: React.FC<types.PageProps> = ({
     title,
     pageId,
     rootNotionPageId: site.rootNotionPageId,
-    recordMap
+    recordMap,
+    blocks
   })
 
   if (!config.isServer) {
@@ -121,13 +122,6 @@ export const NotionPage: React.FC<types.PageProps> = ({
   }
 
   const siteMapPageUrl = mapPageUrl(site, recordMap, searchParams)
-
-  // Todo: This following shouldn't be here (in browser-code) but instead should only be executed server-side.
-  //  ... how to do that? Where to put it? (It ... kinda does work, but has errors.)
-  // console.log('siteMapPageUrl: ', siteMapPageUrl)
-  // getAllPages(pageId, undefined).then((allPages) =>
-  //   console.log('AllPages: ', allPages)
-  // )
 
   const canonicalPageUrl =
     !config.isDev && getCanonicalPageUrl(site, recordMap)(pageId)
@@ -222,7 +216,7 @@ export const NotionPage: React.FC<types.PageProps> = ({
 
         <title>{title}</title>
       </Head>
-      <Navigation collapsed={false} links={links} />
+      <Navigation collapsed={false} blocks={blocks} />
 
       <CustomFont site={site} />
 

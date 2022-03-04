@@ -1,11 +1,11 @@
 import pMap from 'p-map'
 
 import { getAllPages } from './get-all-pages'
-import { getSites } from './get-sites'
+import { getSite } from './get-site'
 import * as types from './types'
 
 export async function getSiteMaps(): Promise<types.SiteMap[]> {
-  const sites = await getSites()
+  const sites = await getSite()
 
   const siteMaps = await pMap(
     sites,

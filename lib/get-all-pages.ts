@@ -19,7 +19,9 @@ export async function getAllPagesImpl(
     rootNotionSpaceId,
     notion.getPage.bind(notion)
   )
-  console.log('Somehow running code on get-all-pages. How? Where? What?')
+  console.log(
+    'Getting All Pages... Might take a while? Maybe I should add some progress or so.'
+  )
   const canonicalPageMap = Object.keys(pageMap).reduce(
     (map, pageId: string) => {
       console.log('Doing some page stuff for ' + pageId)
