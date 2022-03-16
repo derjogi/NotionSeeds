@@ -32,6 +32,7 @@ import { Footer } from './Footer'
 
 import styles from './styles.module.css'
 
+// NOTE: if your site doesn't use these, then we recommend switching them to load lazily
 // const Code = dynamic(() =>
 //   import('react-notion-x').then((notion) => notion.Code)
 // )
@@ -105,7 +106,7 @@ export const NotionPage: React.FC<types.PageProps> = ({
   })
 
   if (!config.isServer) {
-    // add important objects to the window global for easy debugging
+    // add important variables to the global window object for easy debugging
     const g = window as any
     g.pageId = pageId
     g.recordMap = recordMap
@@ -119,6 +120,9 @@ export const NotionPage: React.FC<types.PageProps> = ({
 
   // const isRootPage =
   //   parsePageId(block.id) === parsePageId(site.rootNotionPageId)
+
+  // this is all very customizable logic depending on the contents and
+  // structure of your site
   const isBlogPost =
     block.type === 'page' && block.parent_table === 'collection'
   const showTableOfContents = !!isBlogPost
@@ -142,7 +146,7 @@ export const NotionPage: React.FC<types.PageProps> = ({
         }
       }}
     >
-      <PageHead site={site} />
+      <PageHead />
 
       <Head>
         <meta property='og:title' content={title} />
