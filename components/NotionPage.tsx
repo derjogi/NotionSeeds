@@ -100,9 +100,7 @@ export const NotionPage: React.FC<types.PageProps> = ({
     isDev: config.isDev,
     title,
     pageId,
-    rootNotionPageId: site.rootNotionPageId,
-    recordMap,
-    blocks
+    rootNotionPageId: site.rootNotionPageId
   })
 
   if (!config.isServer) {
