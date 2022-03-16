@@ -29,7 +29,7 @@ export async function getBlocksForSubPages(
 export const getPage = pMemoize(getPageImpl, { maxAge: 60000 * 5 })
 
 export async function getPageImpl(pageId: string): Promise<ExtendedRecordMap> {
-  console.log('Getting notion page ', pageId)
+  console.log('Getting notion page & memoizing it: ', pageId)
   const recordMap = await notion.getPage(pageId)
   const blockIds = Object.keys(recordMap.block)
 
