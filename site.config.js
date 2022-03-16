@@ -8,7 +8,7 @@ module.exports = {
 
   // basic site info (required)
   name: 'Seeds',
-  domain: 'localhost',
+  domain: 'notion-seeds.vercel.app',
   author: 'Jonas',
 
   // open graph metadata (optional)
