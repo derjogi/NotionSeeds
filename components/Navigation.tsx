@@ -4,7 +4,7 @@ import styles from './styles.module.css'
 import { FaHamburger } from 'react-icons/fa'
 import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar'
 import 'react-pro-sidebar/dist/css/styles.css'
-import { BaseBlock, PageLink, ToggleBlock } from 'notion-types'
+import { BaseBlock, PageBlock, PageLink, ToggleBlock } from 'notion-types'
 import Link from 'next/link'
 
 export const Navigation: React.FC<{
@@ -31,8 +31,8 @@ export const Navigation: React.FC<{
 
   function createNavigation(blocks: BaseBlock[]) {
     console.log('Blocks: ', blocks)
-    if (blocks === undefined) {
-      return <div />
+    if (blocks === undefined || blocks) {
+      return <div>Loading Navigation...</div>
     }
     return (
       blocks
@@ -41,14 +41,16 @@ export const Navigation: React.FC<{
           const type = block.type
           let titleElement, id
           switch (type) {
-            case 'page':
+            case 'page': {
+              const page = block as PageBlock
               return (
                 <MenuItem>
-                  <Link href={block.id}>
-                    <a>{block.properties.title[0][0]}</a>
+                  <Link href={page.id}>
+                    <a>{page.properties?.title[0][0]}</a>
                   </Link>
                 </MenuItem>
               )
+            }
             case 'alias': {
               const link = block as PageLink
               id = link.format.alias_pointer.id
@@ -64,11 +66,12 @@ export const Navigation: React.FC<{
             case 'toggle': {
               // check the content, those IDs should be present as separate blocks:
               const submenus = []
-              block.content.forEach((contentId) => {
+              const toggle = block as ToggleBlock
+              toggle.content.forEach((contentId) => {
                 submenus.push(blocks.filter((b) => b.id === contentId)[0])
               })
               return (
-                <SubMenu title={(block as ToggleBlock).properties.title}>
+                <SubMenu title={toggle.properties.title[0][0]}>
                   {submenus}
                 </SubMenu>
               )
