@@ -19,7 +19,6 @@ import { getBlockTitle } from 'notion-utils'
 import { mapPageUrl, getCanonicalPageUrl } from 'lib/map-page-url'
 import { mapNotionImageUrl } from 'lib/map-image-url'
 import { getPageDescription } from 'lib/get-page-description'
-import { getPageTweet } from 'lib/get-page-tweet'
 import { searchNotion } from 'lib/search-notion'
 import * as types from 'lib/types'
 import * as config from 'lib/config'
@@ -29,11 +28,7 @@ import { Loading } from './Loading'
 import { Page404 } from './Page404'
 import { Navigation } from './Navigation'
 import { PageHead } from './PageHead'
-import { PageActions } from './PageActions'
 import { Footer } from './Footer'
-import { PageSocial } from './PageSocial'
-import { GitHubShareButton } from './GitHubShareButton'
-import { ReactUtterances } from './ReactUtterances'
 
 import styles from './styles.module.css'
 
@@ -62,10 +57,6 @@ import styles from './styles.module.css'
 const Equation = dynamic(() =>
   import('react-notion-x').then((notion) => notion.Equation)
 )
-
-// we're now using a much lighter-weight tweet renderer react-static-tweets
-// instead of the official iframe-based embed widget from twitter
-// const Tweet = dynamic(() => import('react-tweet-embed'))
 
 const Modal = dynamic(
   () => import('react-notion-x').then((notion) => notion.Modal),
@@ -141,30 +132,6 @@ export const NotionPage: React.FC<types.PageProps> = ({
   const socialDescription =
     getPageDescription(block, recordMap) ?? config.description
 
-  let comments: React.ReactNode = null
-  let pageAside: React.ReactChild = null
-
-  // only display comments and page actions on blog post pages
-  if (isBlogPost) {
-    if (config.utterancesGitHubRepo) {
-      comments = (
-        <ReactUtterances
-          repo={config.utterancesGitHubRepo}
-          issueMap='issue-term'
-          issueTerm='title'
-          theme={darkMode.value ? 'photon-dark' : 'github-light'}
-        />
-      )
-    }
-
-    const tweet = getPageTweet(block, recordMap)
-    if (tweet) {
-      pageAside = <PageActions tweet={tweet} />
-    }
-  } else {
-    pageAside = <PageSocial />
-  }
-
   return (
     <TwitterContextProvider
       value={{
@@ -216,74 +183,72 @@ export const NotionPage: React.FC<types.PageProps> = ({
 
         <title>{title}</title>
       </Head>
-      <Navigation collapsed={false} blocks={blocks} />
+      <div className={styles.row}>
+        <Navigation collapsed={false} blocks={blocks} />
 
-      <CustomFont site={site} />
+        <CustomFont site={site} />
 
-      {isLiteMode && <BodyClassName className='notion-lite' />}
+        {isLiteMode && <BodyClassName className='notion-lite' />}
 
-      <NotionRenderer
-        bodyClassName={cs(
-          styles.notion,
-          pageId === site.rootNotionPageId && 'index-page'
-        )}
-        components={{
-          pageLink: ({
-            href,
-            as,
-            passHref,
-            prefetch,
-            replace,
-            scroll,
-            shallow,
-            locale,
-            ...props
-          }) => (
-            <Link
-              href={href}
-              as={as}
-              passHref={passHref}
-              prefetch={prefetch}
-              replace={replace}
-              scroll={scroll}
-              shallow={shallow}
-              locale={locale}
-            >
-              <a {...props} />
-            </Link>
-          ),
-          code: Code,
-          collection: Collection,
-          collectionRow: CollectionRow,
-          tweet: Tweet,
-          modal: Modal,
-          equation: Equation
-        }}
-        recordMap={recordMap}
-        rootPageId={site.rootNotionPageId}
-        fullPage={!isLiteMode}
-        darkMode={darkMode.value}
-        previewImages={site.previewImages !== false}
-        showCollectionViewDropdown={false}
-        showTableOfContents={showTableOfContents}
-        minTableOfContentsItems={minTableOfContentsItems}
-        defaultPageIcon={config.defaultPageIcon}
-        defaultPageCover={config.defaultPageCover}
-        defaultPageCoverPosition={config.defaultPageCoverPosition}
-        mapPageUrl={siteMapPageUrl}
-        mapImageUrl={mapNotionImageUrl}
-        searchNotion={searchNotion}
-        pageFooter={comments}
-        pageAside={pageAside}
-        footer={
-          <Footer
-            isDarkMode={darkMode.value}
-            toggleDarkMode={darkMode.toggle}
-          />
-        }
-      />
-
-      <GitHubShareButton />
+        <NotionRenderer
+          bodyClassName={cs(
+            styles.notion,
+            pageId === site.rootNotionPageId && 'index-page'
+          )}
+          components={{
+            pageLink: ({
+              href,
+              as,
+              passHref,
+              prefetch,
+              replace,
+              scroll,
+              shallow,
+              locale,
+              ...props
+            }) => (
+              <Link
+                href={href}
+                as={as}
+                passHref={passHref}
+                prefetch={prefetch}
+                replace={replace}
+                scroll={scroll}
+                shallow={shallow}
+                locale={locale}
+              >
+                <a {...props} />
+              </Link>
+            ),
+            code: Code,
+            collection: Collection,
+            collectionRow: CollectionRow,
+            tweet: Tweet,
+            modal: Modal,
+            equation: Equation
+          }}
+          recordMap={recordMap}
+          rootPageId={site.rootNotionPageId}
+          fullPage={!isLiteMode}
+          darkMode={darkMode.value}
+          previewImages={site.previewImages !== false}
+          showCollectionViewDropdown={false}
+          showTableOfContents={showTableOfContents}
+          minTableOfContentsItems={minTableOfContentsItems}
+          defaultPageIcon={config.defaultPageIcon}
+          defaultPageCover={config.defaultPageCover}
+          defaultPageCoverPosition={config.defaultPageCoverPosition}
+          mapPageUrl={siteMapPageUrl}
+          mapImageUrl={mapNotionImageUrl}
+          searchNotion={searchNotion}
+          footer={
+            <Footer
+              isDarkMode={darkMode.value}
+              toggleDarkMode={darkMode.toggle}
+            />
+          }
+        />
+      </div>
     </TwitterContextProvider>
   )
 }

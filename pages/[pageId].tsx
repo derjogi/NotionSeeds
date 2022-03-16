@@ -3,6 +3,8 @@ import { isDev, domain } from 'lib/config'
 import { getSiteMaps } from 'lib/get-site-maps'
 import { resolveNotionPage } from 'lib/resolve-notion-page'
 import { NotionPage } from 'components'
+import { getBlocksForSubPages } from '../lib/notion'
+import { parsePageId } from 'notion-utils'
 
 export const getStaticProps = async (context) => {
   const rawPageId = context.params.pageId as string
@@ -16,9 +18,18 @@ export const getStaticProps = async (context) => {
       }
     }
 
-    const props = await resolveNotionPage(domain, rawPageId)
+    const pageProps = await resolveNotionPage(domain, rawPageId)
+    const navigationBlocks = await getBlocksForSubPages(
+      parsePageId('5507b637e0a349a4b722041e82b81d04')
+    )
 
-    return { props, revalidate: 10 }
+    return {
+      props: {
+        ...pageProps,
+        blocks: navigationBlocks
+      },
+      revalidate: 10
+    }
   } catch (err) {
     console.error('page error', domain, rawPageId, err)
 

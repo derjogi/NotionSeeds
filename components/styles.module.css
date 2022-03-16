@@ -4,6 +4,11 @@
   }
 }
 
+.row {
+  display:flex;
+  flex-direction:row;
+}
+
 .container {
   position: absolute;
   top: 0;

@@ -9,6 +9,7 @@ import { getPreviewImages } from './get-preview-images'
 import { mapNotionImageUrl } from './map-image-url'
 import { fetchTweetAst } from 'static-tweets'
 import pMap from 'p-map'
+import pMemoize from 'p-memoize'
 
 export const notion = new NotionAPI({
   apiBaseUrl: process.env.NOTION_API_BASE_URL
@@ -18,14 +19,16 @@ export async function getBlocksForSubPages(
   pageId: string
 ): Promise<BaseBlock[]> {
   console.log('Getting notion page ', pageId)
-  const recordMap = await notion.getPage(pageId)
+  const recordMap = await getPage(pageId)
   const blocks = recordMap.block
   return Object.values(blocks)
     .filter((value) => value.value.id !== pageId)
     .map((value) => value.value as BaseBlock)
 }
 
-export async function getPage(pageId: string): Promise<ExtendedRecordMap> {
+export const getPage = pMemoize(getPageImpl, { maxAge: 60000 * 5 })
+
+export async function getPageImpl(pageId: string): Promise<ExtendedRecordMap> {
   console.log('Getting notion page ', pageId)
   const recordMap = await notion.getPage(pageId)
   const blockIds = Object.keys(recordMap.block)
