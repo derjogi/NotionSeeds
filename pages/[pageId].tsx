@@ -53,7 +53,7 @@ export async function getStaticPaths() {
       pageId
     }
   }))
-  console.log(paths)
+  console.log('Canonical paths from sitemap: ', paths)
 
   return {
     paths,

@@ -15,7 +15,7 @@ export default async (
 
   const siteMap = await getSiteMap()
 
-  console.log('Got sitemaps: ', siteMap)
+  // console.log('Got sitemaps: ', siteMap)
   // cache sitemap for up to one hour
   res.setHeader(
     'Cache-Control',
