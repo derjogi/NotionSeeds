@@ -10,7 +10,7 @@ export const getStaticProps = async () => {
   try {
     const mainNotionPage = await resolveNotionPage(domain)
     const blocks = await getBlocksForSubPages(
-      parsePageId('5507b637e0a349a4b722041e82b81d04')
+      parsePageId('5507b637e0a349a4b722041e82b81d04') // navigation page
     )
     // const siteMap = await getSiteMaps()[0]
     // const subPages = siteMap.canonicalPageMap
