@@ -1,4 +1,4 @@
-import { BaseBlock, ExtendedRecordMap, PageBlock, PageMap } from 'notion-types'
+import { BaseBlock, ExtendedRecordMap, PageMap } from 'notion-types'
 
 export * from 'notion-types'
 

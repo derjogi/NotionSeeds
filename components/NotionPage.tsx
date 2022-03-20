@@ -96,7 +96,7 @@ export const NotionPage: React.FC<types.PageProps> = ({
 
   const title = getBlockTitle(block, recordMap) || site.name
 
-  console.log('notion page', {
+  console.log('Building NotionPage: ', {
     isDev: config.isDev,
     title,
     pageId,

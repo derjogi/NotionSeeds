@@ -40,6 +40,8 @@ export const getStaticProps = async (context) => {
 }
 
 export async function getStaticPaths() {
+  // This gets the data at BUILD time and returns paths, one path for each [pageId] that should be available.
+  // Next.js is using those paths to create the routes (and prebuild pages?).
   if (isDev) {
     return {
       paths: [],
@@ -53,7 +55,7 @@ export async function getStaticPaths() {
       pageId
     }
   }))
-  console.log('Canonical paths from sitemap: ', paths)
+  console.log('Pages available to browse: ', paths)
 
   return {
     paths,

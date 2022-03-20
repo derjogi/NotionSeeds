@@ -12,8 +12,20 @@ export async function resolveNotionPage(domain: string, rawPageUri?: string) {
   let pageId: string
   let site: types.Site
   let recordMap: ExtendedRecordMap
+  const preferCached = true
 
-  console.log('PageId in resolveNotionPage = ' + rawPageUri)
+  console.log('PageId in resolve-notion-page = ' + rawPageUri)
+
+  async function getPageResources() {
+    const resources = await Promise.all([
+      getSiteForDomain(domain),
+      getPage(pageId)
+    ])
+
+    site = resources[0]
+    recordMap = resources[1]
+  }
+
   if (rawPageUri && rawPageUri !== 'index') {
     pageId = parsePageId(rawPageUri)
 
@@ -28,34 +40,22 @@ export async function resolveNotionPage(domain: string, rawPageUri?: string) {
       }
     }
     if (pageId) {
-      console.log('Found a valid pageId')
-      const resources = await Promise.all([
-        getSiteForDomain(domain),
-        getPage(pageId)
-      ])
-
-      site = resources[0]
-      recordMap = resources[1]
+      await getPageResources()
     } else {
-      console.log('No valid pageId')
+      console.log(`${rawPageUri} is not a valid pageId, checking whether we have a mapping in the sitemap...`)
       // handle mapping of user-friendly canonical page paths to Notion page IDs
       // e.g., /foo versus /71201624b204481f862630ea25ce62fe
       const siteMap = await getSiteMap()
       pageId = siteMap?.canonicalPageMap?.[rawPageUri]
+      console.log(`... done getting sitemap; pageId for ${rawPageUri} is: '${pageId}'` )
 
       if (pageId) {
-        // TODO: we're not re-using the site from siteMaps because it is
-        //  cached aggressively
-        // site = await getSiteForDomain(domain)
-        // recordMap = siteMap.pageMap[pageId]
-
-        const resources = await Promise.all([
-          getSiteForDomain(domain),
-          getPage(pageId)
-        ])
-
-        site = resources[0]
-        recordMap = resources[1]
+        if (preferCached) {
+          site = await getSiteForDomain(domain)
+          recordMap = siteMap.pageMap[pageId]
+        } else {
+          await getPageResources()
+        }
       } else {
         return {
           error: {

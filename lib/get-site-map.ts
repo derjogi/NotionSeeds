@@ -13,7 +13,7 @@ export async function getSiteMap({
   full?: boolean
 } = {}): Promise<types.SiteMap> {
   const site = await getSiteForDomain(config.domain)
-
+  console.log('Getting sitemap...')
   const siteMap = await getAllPages(
     site.rootNotionPageId,
     site.rootNotionSpaceId,
@@ -23,6 +23,7 @@ export async function getSiteMap({
       full
     }
   )
+  console.log('... done getting sitemap.')
 
   return {
     site,

@@ -30,7 +30,9 @@ export const Navigation: React.FC<{
   }
 
   function createNavigation(blocks: BaseBlock[]) {
-    console.log('Blocks: ', blocks)
+    console.log(
+      `${blocks.length} Blocks were passed in to construct the navigation`
+    )
     if (blocks === undefined || blocks) {
       return <div>Loading Navigation...</div>
     }

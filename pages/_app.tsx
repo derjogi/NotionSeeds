@@ -38,6 +38,17 @@ import React from 'react'
 import { useRouter } from 'next/router'
 import { fathomId, fathomConfig } from 'lib/config'
 import * as Fathom from 'fathom-client'
+import Layout from '../components/Layout'
+
+// Adding a timestamp in front of all logs:
+console.log = (function () {
+  const consoleLog = console.log
+
+  return function () {
+    const args = [].slice.call(arguments)
+    consoleLog.apply(console, [new Date().toISOString() + ' ::'].concat(args))
+  }
+})()
 
 export default function App({ Component, pageProps }) {
   const router = useRouter()
@@ -58,5 +69,9 @@ export default function App({ Component, pageProps }) {
     }
   }, [])
 
-  return <Component {...pageProps} />
+  return (
+    <Layout>
+      <Component {...pageProps} />
+    </Layout>
+  )
 }
