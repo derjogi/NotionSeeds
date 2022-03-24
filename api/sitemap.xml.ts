@@ -12,7 +12,7 @@ export default async (
     console.log('Invalid: Trying to get sitemap with ' + req.method)
     return res.status(405).send({ error: 'method not allowed' })
   }
-
+  console.log('Sitemap.xml(.ts) was called')
   const siteMap = await getSiteMap()
 
   // console.log('Got sitemaps: ', siteMap)

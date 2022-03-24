@@ -1,7 +1,7 @@
 import * as React from 'react'
-import * as config from 'lib/config'
-import styles from './styles.module.css'
-import { FaHamburger } from 'react-icons/fa'
+// import * as config from 'lib/config'
+// import styles from './styles.module.css'
+// import { FaHamburger } from 'react-icons/fa'
 import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar'
 import 'react-pro-sidebar/dist/css/styles.css'
 import { BaseBlock, PageBlock, PageLink, ToggleBlock } from 'notion-types'
@@ -11,23 +11,23 @@ export const Navigation: React.FC<{
   collapsed: boolean
   blocks: BaseBlock[]
 }> = ({ collapsed, blocks }) => {
-  const [hasMounted, setHasMounted] = React.useState(false)
-  const toggleCollapsed = React.useCallback(
-    (e) => {
-      e.preventDefault()
-      collapsed = !collapsed
-    },
-    [collapsed]
-  )
+  // const [hasMounted, setHasMounted] = React.useState(false)
+  // const toggleCollapsed = React.useCallback(
+  //   (e) => {
+  //     e.preventDefault()
+  //     collapsed = !collapsed
+  //   },
+  //   [collapsed]
+  // )
 
-  React.useEffect(() => {
-    setHasMounted(true)
-  }, [])
-
-  type LinkAndTitle = {
-    id?: string
-    title?: string
-  }
+  // React.useEffect(() => {
+  //   setHasMounted(true)
+  // }, [])
+  //
+  // type LinkAndTitle = {
+  //   id?: string
+  //   title?: string
+  // }
 
   function createNavigation(blocks: BaseBlock[]) {
     console.log(
