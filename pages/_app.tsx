@@ -26,6 +26,7 @@ import { useRouter } from 'next/router'
 import posthog from 'posthog-js'
 
 import { bootstrap } from 'lib/bootstrap-client'
+import Layout from '../components/Layout'
 import {
   isServer,
   fathomId,
@@ -37,6 +38,17 @@ import {
 if (!isServer) {
   bootstrap()
 }
+
+// // Adding a timestamp in front of all logs:
+// console.log = (function () {
+//   const consoleLog = console.log
+//
+//   return function () {
+//     // eslint-disable-next-line prefer-rest-params
+//     const args = [].slice.call(arguments)
+//     consoleLog.apply(console, [new Date().toLocaleTimeString() + ' ::'].concat(args))
+//   }
+// })()
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter()
@@ -67,5 +79,9 @@ export default function App({ Component, pageProps }: AppProps) {
     }
   }, [router.events])
 
-  return <Component {...pageProps} />
+  return (
+    <Layout>
+      <Component {...pageProps} />
+    </Layout>
+  )
 }
