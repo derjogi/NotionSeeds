@@ -4,6 +4,7 @@ import styles from './styles.module.css'
 import { FaHamburger } from '@react-icons/all-files/fa/FaHamburger'
 import { FaAngleRight } from '@react-icons/all-files/fa/FaAngleRight'
 import Nav from '../lib/navigation.json'
+import { FaAngleDown } from '@react-icons/all-files/fa/FaAngleDown'
 
 export const Navigation: React.FC<{
   collapsed: boolean
@@ -24,22 +25,40 @@ export const Navigation: React.FC<{
   }
 
   function createNavigation() {
-    const navLvl1 = Nav
+    const mainNavLvl = Nav[0].subs
 
-    function processLinksAt(navLevel) {
+    function processLinksAt(navLevel, lvl) {
       return navLevel.map((link, i) => {
+        const displayName = link.displayName ? link.displayName : link.name
+        const icon = link.icon.endsWith(".png") ? (<img src={link.icon} width={32} alt={"🫥"}/>) : link.icon
+        const iconAndOptionalName = (
+          <a>
+            <span className={styles.levelIndicator}>{"-".repeat(lvl)}</span>
+            <span className={styles.icon}>{icon}</span>
+            {navOpen? (<span className={styles.linkName}>{displayName}</span>) : ""}
+          </a>
+        )
         if (!link.subs) {
           return (
-            <li key={i}><Link href={link.target}>{link.name}</Link></li>
+            <li key={i}>
+              <Link href={link.target}>
+                {iconAndOptionalName}
+              </Link>
+            </li>
           )
         } else {
+          const show = subMenusToShow.includes(displayName)
           return (
             <li>
-              <FaAngleRight className={styles.clickable} onClick={() => toggleMenu(link.name)} />
-              <Link
-              href={link.target}>{link.name}</Link>
-              <ul className={`${subMenusToShow.includes(link.name) ? '' : styles.hide}`}>
-                {processLinksAt(link.subs)}
+              {show
+                ? <FaAngleDown className={styles.clickable} onClick={() => toggleMenu(displayName)} />
+                : <FaAngleRight className={styles.clickable} onClick={() => toggleMenu(displayName)} />
+              }
+              <Link href={link.target}>
+                {iconAndOptionalName}
+              </Link>
+              <ul className={`${show ? '' : styles.hide}`}>
+                {processLinksAt(link.subs, lvl + 1)}
               </ul>
             </li>
           )
@@ -51,7 +70,7 @@ export const Navigation: React.FC<{
       <nav>
         <ul>
           <div>
-            {processLinksAt(navLvl1)}
+            {processLinksAt(mainNavLvl, 0)}
           </div>
         </ul>
       </nav>

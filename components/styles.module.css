@@ -6,7 +6,7 @@
 
 .navigation {
   /*margin: 10px;*/
-  width: 200px;
+  width: 80px;
   background-color: #f1f1f1;
   position: fixed;
   height: 100%;
@@ -14,7 +14,7 @@
 }
 
 .navigation.open {
-  width: 50px;
+  width: 250px;
 }
 
 .clickable {
@@ -23,6 +23,23 @@
 
 .hide {
   display:none!important
+}
+
+.navigation ul {
+  padding-inline-start: 5px;
+  line-height: 60px;
+}
+
+.navigation ul li {
+  list-style: none;
+}
+
+.navigation .icon {
+  margin-left: 5px;
+}
+
+.navigation .linkName {
+  margin-left: 10px;
 }
 
 .mainContent {
