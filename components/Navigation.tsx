@@ -9,6 +9,22 @@ import { useRouter } from 'next/router'
 import { FaRegDotCircle } from '@react-icons/all-files/fa/FaRegDotCircle'
 import { FaRegCircle } from '@react-icons/all-files/fa/FaRegCircle'
 import { IconContext } from '@react-icons/all-files'
+import { isDev } from '../lib/config'
+import { FaBars } from '@react-icons/all-files/fa/FaBars'
+
+interface SingleLink {
+  name: string
+  icon?: string
+  id: string
+  displayName?: string
+  subs?: Sub
+}
+
+interface Sub {
+  subs?: SingleLink[]
+}
+
+type LinkTree = SingleLink[] | Sub
 
 export const Navigation: React.FC<{
   collapsed: boolean
@@ -30,12 +46,21 @@ export const Navigation: React.FC<{
     }
   }
 
+  function getValidLink(link: SingleLink) {
+    if (isDev) {
+      return link.id
+    }
+    const target = link.name.toLowerCase().replaceAll('+', '').replaceAll(' ', '-')
+    return target
+  }
+
   function createNavigation() {
-    const mainNavLvl = Nav[0].subs
+    const mainNavLvl:LinkTree[] = Nav[0].subs
 
     function processLinksAt(navLevel, lvl) {
       return navLevel.map((link, i) => {
-        const isActiveLink = router.asPath == "/"+link.target
+        const target = getValidLink(link)
+        const isActiveLink = router.asPath == "/"+ target
         const displayName = link.displayName ? link.displayName : link.name
         const icon = link.icon.endsWith(".png") ? (<img src={link.icon} width={32} alt={"🫥"}/>) : link.icon
         const iconAndOptionalName = (
@@ -48,7 +73,7 @@ export const Navigation: React.FC<{
         if (!link.subs) {
           return (
             <li key={i} className={`${styles.clickable} ${isActiveLink?styles.activeLink:null}`}>
-              <Link href={link.target}>
+              <Link href={target}>
                 <a>
                   <IconContext.Provider value={{size: "10px"}}>
                     {isActiveLink ? <FaRegDotCircle/> : <FaRegCircle/>}
@@ -68,7 +93,7 @@ export const Navigation: React.FC<{
                 : <FaAngleRight className={styles.clickable} onClick={() => toggleMenu(displayName)} />
               }
               </span>
-              <Link href={link.target}>
+              <Link href={target}>
                 {iconAndOptionalName}
               </Link>
               <ul className={`${show ? '' : styles.hide}`}>
@@ -103,7 +128,7 @@ export const Navigation: React.FC<{
       </h2></a>
     )
     return (
-      <Link href={link.target}>
+      <Link href={getValidLink(link)}>
         {iconAndOptionalName}
       </Link>
     )
@@ -112,7 +137,7 @@ export const Navigation: React.FC<{
   const title = creatTitle(Nav[0])
   return (
     <div className={`${styles.navigation} ${navOpen?styles.open:null} light-mode`}>
-      <a onClick={() => setNavOpen(!navOpen)}><FaHamburger/></a>
+      <div className={styles.menu}><a onClick={() => setNavOpen(!navOpen)}><FaBars/></a></div>
       {title}
       {links}
     </div>

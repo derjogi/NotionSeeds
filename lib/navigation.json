@@ -3,76 +3,76 @@
     "name": "Co-creating a Regenerative World",
     "displayName": "SEEDS",
     "icon": "seeds_purple.png",
-    "target": "1a80dc8b81a84fae956979bdae7a0480",
+    "id": "1a80dc8b81a84fae956979bdae7a0480",
     "subs": [
       {
         "name": "New to SEEDS",
         "icon": "🧭",
-        "target": "fa3302f9b2a343a386ee609b00c0fa82",
+        "id": "fa3302f9b2a343a386ee609b00c0fa82",
         "subs": [
           {
             "name": "Get to know the SEEDS Constitution",
             "displayName": "Constitution",
             "icon": "📜",
-            "target": "4fad61007d6a4926b3cc1ea507eb1a18"
+            "id": "4fad61007d6a4926b3cc1ea507eb1a18"
           }
         ]
       },
       {
         "name": "Be Regenerative",
         "icon": "🌏",
-        "target": "0ee38e2e42974cd6bec3402984bc29f3"
+        "id": "0ee38e2e42974cd6bec3402984bc29f3"
       },
       {
         "name": "Learn",
         "icon": "📖",
-        "target": "ec53cbd93cde4dccae4cf5a65e753671"
+        "id": "ec53cbd93cde4dccae4cf5a65e753671"
       },
       {
         "name": "Research",
         "icon": "🔬",
-        "target": "1bd7bf41c5e74fd392ea5956a961d5bb"
+        "id": "1bd7bf41c5e74fd392ea5956a961d5bb"
       },
       {
         "name": "SEEDS 101",
         "icon": "🌱",
-        "target": "e58cc8284f8443e79725f8779b754dc6",
+        "id": "e58cc8284f8443e79725f8779b754dc6",
         "subs": [
           {
             "name": "SEED FAQ",
             "icon": "💡",
-            "target": "9be9d16fed884726be2ed0a8a9664ed6"
+            "id": "9be9d16fed884726be2ed0a8a9664ed6"
           },
           {
             "name": "Regenerative Tokenomics",
             "displayName": "Tokenomics",
             "icon": "♻️",
-            "target": "9ce21c0b1d9146eb816c4fa4321faf45"
+            "id": "9ce21c0b1d9146eb816c4fa4321faf45"
           }
         ]
       },
       {
         "name": "Play",
         "icon": "⛹️‍♀️",
-        "target": "14727aa65c5040f388ee789e0b8dc6d1"
+        "id": "14727aa65c5040f388ee789e0b8dc6d1"
       },
       {
         "name": "Create",
         "icon": "🎨",
-        "target": "bba2f807c6ac4b65a2927fc7346df272",
+        "id": "bba2f807c6ac4b65a2927fc7346df272",
         "subs": [
           {
             "name": "Regenerative Civics Incubators + Alliance",
             "displayName": "Alliance",
             "icon": "civics_incubator.png",
-            "target": "102477f702a24795ac1d1b5bc99ce277"
+            "id": "102477f702a24795ac1d1b5bc99ce277"
           }
         ]
       },
       {
         "name": "Govern",
         "icon": "🌖",
-        "target": "f4206793fb8f4e67b88e1e8f5e603896"
+        "id": "f4206793fb8f4e67b88e1e8f5e603896"
       }
     ]
   }
