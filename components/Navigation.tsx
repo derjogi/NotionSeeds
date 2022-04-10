@@ -16,14 +16,17 @@ interface SingleLink {
   icon?: string
   id: string
   displayName?: string
-  subs?: Sub
-}
-
-interface Sub {
   subs?: SingleLink[]
 }
 
-type LinkTree = SingleLink[] | Sub
+/*
+ '{ name: string; displayName: string; icon: string; id: string; subs: ({ name: string; icon: string; id: string; subs?: undefined; }
+| { name: string; icon: string; id: string; subs: ({ name: string; icon: string; id: string; displayName?: undefined; }
+| { ...; })[]; })[]; }' is not assignable to parameter of type 'SingleLink'.
+'({ name: string; icon: string; id: string; subs?: undefined; }
+| { name: string; icon: string; id: string; subs: ({ name: string; icon: string; id: string; displayName?: undefined; }
+| { name: string; displayName: string; icon: string; id: string; })[]; })[]' has no properties in common with type 'Sub'.
+ */
 
 export const Navigation: React.FC<{
   collapsed: boolean
@@ -45,18 +48,17 @@ export const Navigation: React.FC<{
     }
   }
 
-  function getValidLink(link: SingleLink) {
+  function getValidLink(link: SingleLink): string {
     if (isDev) {
       return link.id
     }
-    const target = link.name.toLowerCase().replaceAll('+', '').replaceAll(' ', '-')
-    return target
+    return link.name.toLowerCase().replaceAll('+', '').replaceAll(' ', '-')
   }
 
   function createNavigation() {
-    const mainNavLvl:LinkTree[] = Nav[0].subs
+    const mainNavLvl:SingleLink[] = Nav[0].subs
 
-    function processLinksAt(navLevel, lvl) {
+    function processLinksAt(navLevel:SingleLink[], lvl:number) {
       return navLevel.map((link, i) => {
         const target = getValidLink(link)
         const isActiveLink = router.asPath == "/"+ target
@@ -64,7 +66,6 @@ export const Navigation: React.FC<{
         const icon = link.icon.endsWith(".png") ? (<img src={link.icon} width={32} alt={"🫥"}/>) : link.icon
         const iconAndOptionalName = (
           <a>
-            {/*<span className={styles.levelIndicator}>{"-".repeat(lvl)}</span>*/}
             <span className={styles.icon}>{icon}</span>
             {navOpen? (<span className={styles.linkName}>{displayName}</span>) : ""}
           </a>
@@ -117,7 +118,7 @@ export const Navigation: React.FC<{
 
   const links = createNavigation()
 
-  function creatTitle(link: any) {
+  function creatTitle(link: SingleLink) {
     const displayName = link.displayName ? link.displayName : link.name
     const icon = link.icon.endsWith(".png") ? (<img className={styles.imageAsIcon} src={link.icon} width={32} alt={"🫥"}/>) : link.icon
     const iconAndOptionalName = (
