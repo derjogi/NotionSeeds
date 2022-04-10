@@ -5,12 +5,18 @@ import { FaHamburger } from '@react-icons/all-files/fa/FaHamburger'
 import { FaAngleRight } from '@react-icons/all-files/fa/FaAngleRight'
 import Nav from '../lib/navigation.json'
 import { FaAngleDown } from '@react-icons/all-files/fa/FaAngleDown'
+import { useRouter } from 'next/router'
+import { FaRegDotCircle } from '@react-icons/all-files/fa/FaRegDotCircle'
+import { FaRegCircle } from '@react-icons/all-files/fa/FaRegCircle'
+import { IconContext } from '@react-icons/all-files'
 
 export const Navigation: React.FC<{
   collapsed: boolean
 }> = ({ collapsed}) => {
   const [navOpen, setNavOpen] = React.useState(collapsed);
   const [subMenusToShow, updateList] = React.useState([]);
+
+  const router = useRouter()
 
   const toggleMenu = (whatToToggle) => {
     console.log('Subs: ', subMenusToShow)
@@ -29,31 +35,39 @@ export const Navigation: React.FC<{
 
     function processLinksAt(navLevel, lvl) {
       return navLevel.map((link, i) => {
+        const isActiveLink = router.asPath == "/"+link.target
         const displayName = link.displayName ? link.displayName : link.name
         const icon = link.icon.endsWith(".png") ? (<img src={link.icon} width={32} alt={"🫥"}/>) : link.icon
         const iconAndOptionalName = (
           <a>
-            <span className={styles.levelIndicator}>{"-".repeat(lvl)}</span>
+            {/*<span className={styles.levelIndicator}>{"-".repeat(lvl)}</span>*/}
             <span className={styles.icon}>{icon}</span>
             {navOpen? (<span className={styles.linkName}>{displayName}</span>) : ""}
           </a>
         )
         if (!link.subs) {
           return (
-            <li key={i}>
+            <li key={i} className={`${styles.clickable} ${isActiveLink?styles.activeLink:null}`}>
               <Link href={link.target}>
-                {iconAndOptionalName}
+                <a>
+                  <IconContext.Provider value={{size: "10px"}}>
+                    {isActiveLink ? <FaRegDotCircle/> : <FaRegCircle/>}
+                  </IconContext.Provider>
+                  {iconAndOptionalName}
+                </a>
               </Link>
             </li>
           )
         } else {
           const show = subMenusToShow.includes(displayName)
           return (
-            <li>
+            <li key={i}>
+              <span className={styles.angleBrackets}>
               {show
                 ? <FaAngleDown className={styles.clickable} onClick={() => toggleMenu(displayName)} />
                 : <FaAngleRight className={styles.clickable} onClick={() => toggleMenu(displayName)} />
               }
+              </span>
               <Link href={link.target}>
                 {iconAndOptionalName}
               </Link>
@@ -78,9 +92,28 @@ export const Navigation: React.FC<{
   }
 
   const links = createNavigation()
+
+  function creatTitle(link: any) {
+    const displayName = link.displayName ? link.displayName : link.name
+    const icon = link.icon.endsWith(".png") ? (<img className={styles.imageAsIcon} src={link.icon} width={32} alt={"🫥"}/>) : link.icon
+    const iconAndOptionalName = (
+      <a><h2>
+        <span className={styles.icon}>{icon}</span>
+        {navOpen? (<span className={styles.linkName}>{displayName}</span>) : ""}
+      </h2></a>
+    )
+    return (
+      <Link href={link.target}>
+        {iconAndOptionalName}
+      </Link>
+    )
+  }
+
+  const title = creatTitle(Nav[0])
   return (
     <div className={`${styles.navigation} ${navOpen?styles.open:null} light-mode`}>
       <a onClick={() => setNavOpen(!navOpen)}><FaHamburger/></a>
+      {title}
       {links}
     </div>
   )

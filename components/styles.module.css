@@ -21,12 +21,20 @@
   cursor: pointer;
 }
 
+.activeLink {
+  text-decoration: underline #00ab6c;
+}
+
 .hide {
   display:none!important
 }
 
+.navigation span .angleBrackets {
+  margin-left: -16px;  /*They're 16px wide*/
+}
+
 .navigation ul {
-  padding-inline-start: 5px;
+  padding-inline-start: 20px;  /*Additional padding for each level*/
   line-height: 60px;
 }
 
@@ -35,11 +43,15 @@
 }
 
 .navigation .icon {
-  margin-left: 5px;
+  padding-left: 5px;
+}
+
+.navigation .imageAsIcon {
+  vertical-align: middle;
 }
 
 .navigation .linkName {
-  margin-left: 10px;
+  padding-left: 10px;
 }
 
 .mainContent {
