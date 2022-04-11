@@ -52,7 +52,7 @@ export const Navigation: React.FC<{
     if (isDev) {
       return link.id
     }
-    return link.name.toLowerCase().replaceAll('+', '').replaceAll(' ', '-')
+    return link.name.toLowerCase().replace('/+/g', '').replace('/ /g', '-')
   }
 
   function createNavigation() {
