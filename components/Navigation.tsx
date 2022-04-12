@@ -49,10 +49,10 @@ export const Navigation: React.FC<{
   }
 
   function getValidLink(link: SingleLink): string {
-    if (isDev) {
+    // if (isDev) {
       return link.id
-    }
-    return link.name.toLowerCase().replace(/\+/g, '').replace(/\s+/g, '-')
+    // }
+    // return link.name.toLowerCase().replace(/\+/g, '').replace(/\s+/g, '-')
   }
 
   function createNavigation() {
