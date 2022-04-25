@@ -61,10 +61,12 @@
   background-color: #b0ceb0; /* placeholder for now */
 }
 
+.toggleCollapsed {
+  transform: rotate(-90deg);
+}
+
 .navigation .activeLink {
-  text-decoration: underline;
-  text-decoration-color: #00ab6c;
-  background-color: #777777;
+  background-color: rgba(108, 213, 0, 0.31);
 }
 
 .navigation .icon {
@@ -81,9 +83,13 @@
   padding-left: 10px;
 }
 
-.navigation span.angleBrackets {
+.navigation .expander {
   float: right;
   margin-right: 10px;
+}
+
+.navigation .toggleArrow {
+  color: var(--fg-color);
 }
 
 .mainContent {

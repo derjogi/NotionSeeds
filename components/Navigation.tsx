@@ -4,21 +4,7 @@ import styles from './styles.module.css'
 import Nav from '../lib/navigation.json'
 import { useRouter } from 'next/router'
 // import { isDev } from '../lib/config'
-import { IconContext } from '@react-icons/all-files'
-import { FaAngleRight } from '@react-icons/all-files/fa/FaAngleRight'
-import { FaAngleDown } from '@react-icons/all-files/fa/FaAngleDown'
-import { FaRegDotCircle } from '@react-icons/all-files/fa/FaRegDotCircle'
-import { FaRegCircle } from '@react-icons/all-files/fa/FaRegCircle'
 import { FaBars } from '@react-icons/all-files/fa/FaBars'
-import {FaCaretDown} from "@react-icons/all-files/fa/FaCaretDown";
-import {FaCaretLeft} from "@react-icons/all-files/fa/FaCaretLeft";
-import {FaCaretRight} from "@react-icons/all-files/fa/FaCaretRight";
-import {FaCaretSquareDown} from "@react-icons/all-files/fa/FaCaretSquareDown";
-import {FaCaretSquareRight} from "@react-icons/all-files/fa/FaCaretSquareRight";
-import {FaRegCaretSquareDown} from "@react-icons/all-files/fa/FaRegCaretSquareDown";
-import {FaRegCaretSquareRight} from "@react-icons/all-files/fa/FaRegCaretSquareRight";
-import {FaRegSquare} from "@react-icons/all-files/fa/FaRegSquare";
-import {FaSquare} from "@react-icons/all-files/fa/FaSquare";
 import {FaChevronDown} from "@react-icons/all-files/fa/FaChevronDown";
 import {FaChevronRight} from "@react-icons/all-files/fa/FaChevronRight";
 
@@ -30,14 +16,15 @@ interface SingleLink {
   subs?: SingleLink[]
 }
 
-/*
- '{ name: string; displayName: string; icon: string; id: string; subs: ({ name: string; icon: string; id: string; subs?: undefined; }
-| { name: string; icon: string; id: string; subs: ({ name: string; icon: string; id: string; displayName?: undefined; }
-| { ...; })[]; })[]; }' is not assignable to parameter of type 'SingleLink'.
-'({ name: string; icon: string; id: string; subs?: undefined; }
-| { name: string; icon: string; id: string; subs: ({ name: string; icon: string; id: string; displayName?: undefined; }
-| { name: string; displayName: string; icon: string; id: string; })[]; })[]' has no properties in common with type 'Sub'.
- */
+const ToggleIcon = ({show, ...parentProps}) => {
+  return (
+    <div className={styles.toggleArrow} {...parentProps}>
+      <svg width="12" height="10" className={show?styles.toggleExpanded:styles.toggleCollapsed}>
+        <polygon fill="currentColor" points="0,0 12,0 6,10"/>
+      </svg>
+    </div>
+  )
+}
 
 export const Navigation: React.FC<{
   collapsed: boolean
@@ -84,34 +71,28 @@ export const Navigation: React.FC<{
         if (!link.subs) {
           return (
             <li key={i}>
-              <div className={`${styles.linkLine} ${isActiveLink?styles.activeLink:null}`}>
-                <Link href={target}>
+              <Link href={target}>
+                <div className={`${styles.linkLine} ${styles.clickable} ${isActiveLink?styles.activeLink:null}`}>
                   {iconAndOptionalName}
-                </Link>
-              </div>
+                </div>
+              </Link>
             </li>
           )
         } else {
           const show = subMenusToShow.includes(displayName)
           return (
             <li key={i}>
-              <div className={`${styles.linkLine} ${isActiveLink?styles.activeLink:null}`}>
-                <Link href={target}>
+              <Link href={target}>
+                <div className={`${styles.linkLine} ${styles.clickable} ${isActiveLink?styles.activeLink:null}`}>
                   {iconAndOptionalName}
-                </Link>
-                <span className={styles.angleBrackets}>
-                {show
-                  ? <FaChevronDown className={styles.clickable} onClick={(event) => {
-                    event.preventDefault()
-                    toggleMenu(displayName)
-                  }} />
-                  : <FaChevronRight className={styles.clickable} onClick={(event) => {
-                    event.preventDefault()
-                    toggleMenu(displayName)
-                  }} />
-                }
-                </span>
-              </div>
+                  <span className={styles.expander}>
+                    <ToggleIcon show={show} onClick={(event) => {
+                        event.preventDefault()
+                        toggleMenu(displayName)
+                      }} />
+                  </span>
+                </div>
+              </Link>
               <ul className={`${show ? '' : styles.hide}`}>
                 {processLinksAt(link.subs, lvl + 1)}
               </ul>
