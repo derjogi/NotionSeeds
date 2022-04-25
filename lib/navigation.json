@@ -47,7 +47,33 @@
             "name": "Regenerative Tokenomics",
             "displayName": "Tokenomics",
             "icon": "♻️",
-            "id": "9ce21c0b1d9146eb816c4fa4321faf45"
+            "id": "9ce21c0b1d9146eb816c4fa4321faf45",
+            "subs": [
+              {
+                "name": "Regenerative",
+                "icon": "🐝",
+                "id": "xyz"
+              },
+              {
+                "name": "Competitive",
+                "icon": "🐍",
+                "id": "xyz",
+                "subs": [
+                  {
+                    "name": "Some more showing",
+                    "icon": "🐣",
+                    "id": "asudab",
+                    "subs": [
+                      {
+                        "name": "And even more",
+                        "id": "atcgatgsct",
+                        "icon": "🦞"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
           }
         ]
       },

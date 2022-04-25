@@ -10,6 +10,17 @@ import { FaAngleDown } from '@react-icons/all-files/fa/FaAngleDown'
 import { FaRegDotCircle } from '@react-icons/all-files/fa/FaRegDotCircle'
 import { FaRegCircle } from '@react-icons/all-files/fa/FaRegCircle'
 import { FaBars } from '@react-icons/all-files/fa/FaBars'
+import {FaCaretDown} from "@react-icons/all-files/fa/FaCaretDown";
+import {FaCaretLeft} from "@react-icons/all-files/fa/FaCaretLeft";
+import {FaCaretRight} from "@react-icons/all-files/fa/FaCaretRight";
+import {FaCaretSquareDown} from "@react-icons/all-files/fa/FaCaretSquareDown";
+import {FaCaretSquareRight} from "@react-icons/all-files/fa/FaCaretSquareRight";
+import {FaRegCaretSquareDown} from "@react-icons/all-files/fa/FaRegCaretSquareDown";
+import {FaRegCaretSquareRight} from "@react-icons/all-files/fa/FaRegCaretSquareRight";
+import {FaRegSquare} from "@react-icons/all-files/fa/FaRegSquare";
+import {FaSquare} from "@react-icons/all-files/fa/FaSquare";
+import {FaChevronDown} from "@react-icons/all-files/fa/FaChevronDown";
+import {FaChevronRight} from "@react-icons/all-files/fa/FaChevronRight";
 
 interface SingleLink {
   name: string
@@ -50,7 +61,7 @@ export const Navigation: React.FC<{
 
   function getValidLink(link: SingleLink): string {
     // if (isDev) {
-      return link.id
+    return link.id
     // }
     // return link.name.toLowerCase().replace(/\+/g, '').replace(/\s+/g, '-')
   }
@@ -65,37 +76,42 @@ export const Navigation: React.FC<{
         const displayName = link.displayName ? link.displayName : link.name
         const icon = link.icon.endsWith(".png") ? (<img src={link.icon} width={32} alt={"🫥"}/>) : link.icon
         const iconAndOptionalName = (
-          <a>
+          <a className={styles.clickable}>
             <span className={styles.icon}>{icon}</span>
             {navOpen? (<span className={styles.linkName}>{displayName}</span>) : ""}
           </a>
         )
         if (!link.subs) {
           return (
-            <li key={i} className={`${styles.clickable} ${isActiveLink?styles.activeLink:null}`}>
-              <Link href={target}>
-                <a>
-                  <IconContext.Provider value={{size: "10px"}}>
-                    {isActiveLink ? <FaRegDotCircle/> : <FaRegCircle/>}
-                  </IconContext.Provider>
+            <li key={i}>
+              <div className={`${styles.linkLine} ${isActiveLink?styles.activeLink:null}`}>
+                <Link href={target}>
                   {iconAndOptionalName}
-                </a>
-              </Link>
+                </Link>
+              </div>
             </li>
           )
         } else {
           const show = subMenusToShow.includes(displayName)
           return (
             <li key={i}>
-              <span className={styles.angleBrackets}>
-              {show
-                ? <FaAngleDown className={styles.clickable} onClick={() => toggleMenu(displayName)} />
-                : <FaAngleRight className={styles.clickable} onClick={() => toggleMenu(displayName)} />
-              }
-              </span>
-              <Link href={target}>
-                {iconAndOptionalName}
-              </Link>
+              <div className={`${styles.linkLine} ${isActiveLink?styles.activeLink:null}`}>
+                <Link href={target}>
+                  {iconAndOptionalName}
+                </Link>
+                <span className={styles.angleBrackets}>
+                {show
+                  ? <FaChevronDown className={styles.clickable} onClick={(event) => {
+                    event.preventDefault()
+                    toggleMenu(displayName)
+                  }} />
+                  : <FaChevronRight className={styles.clickable} onClick={(event) => {
+                    event.preventDefault()
+                    toggleMenu(displayName)
+                  }} />
+                }
+                </span>
+              </div>
               <ul className={`${show ? '' : styles.hide}`}>
                 {processLinksAt(link.subs, lvl + 1)}
               </ul>

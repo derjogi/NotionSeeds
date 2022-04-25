@@ -6,8 +6,8 @@
 
 .navigation {
   /*margin: 10px;*/
-  width: 80px;
-  background-color: #f1f1f1;
+  width: 100px;
+  background-color: var(--bg-color);
   position: fixed;
   height: 100%;
   overflow: auto;
@@ -20,27 +20,24 @@
 }
 
 .navigation.open {
-  width: 250px;
+  width: 300px;
 }
 
-.clickable {
+.navigation .clickable {
   cursor: pointer;
-}
-
-.activeLink {
-  text-decoration: underline #00ab6c;
 }
 
 .hide {
   display:none!important
 }
 
-.navigation span .angleBrackets {
-  margin-left: -16px;  /*They're 16px wide*/
-}
-
 .navigation ul {
-  padding-inline-start: 20px;  /*Additional padding for each level*/
+  padding-inline-start: 20px;  /*padding for each level
+                                Todo: this makes background highlighting
+                                 for selected elements start at 20px,
+                                 but optimally that should start at 0.
+                                 How to do that? Set padding here to 0
+                                 and therefor indent each li/line separately?*/
   line-height: 60px;
 }
 
@@ -48,8 +45,32 @@
   list-style: none;
 }
 
+.navigation ul li ul {
+  list-style: none;
+  /* Making a horizontal 'structure' line: */
+  border-left: 2px solid;
+  border-left-color: #d9d8d8;
+}
+
+.navigation .linkLine {
+  opacity: 1.0;
+}
+
+.navigation .linkLine:hover {
+  opacity: 1.0;
+  background-color: #b0ceb0; /* placeholder for now */
+}
+
+.navigation .activeLink {
+  text-decoration: underline;
+  text-decoration-color: #00ab6c;
+  background-color: #777777;
+}
+
 .navigation .icon {
   padding-left: 5px;
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
 }
 
 .navigation .imageAsIcon {
@@ -60,8 +81,13 @@
   padding-left: 10px;
 }
 
+.navigation span.angleBrackets {
+  float: right;
+  margin-right: 10px;
+}
+
 .mainContent {
-  margin-left: 200px;
+  margin-left: 300px;
   height: 1000px;
 }
 
