@@ -1,15 +1,28 @@
 import * as React from 'react'
 import * as types from 'lib/types'
 import { PageHead } from './PageHead'
+import BodyClassName from 'react-body-classname'
 
 import styles from './styles.module.css'
+import {useTheme} from "next-themes";
+import {useSearchParam} from "react-use";
 
 export const Page404: React.FC<types.PageProps> = ({ site, pageId, error }) => {
   const title = site?.name || 'Notion Page Not Found'
 
+  const lite = useSearchParam('lite')
+  const isLiteMode = lite === 'true'
+
+  const { resolvedTheme } = useTheme()
+  const isDarkMode = resolvedTheme === 'dark'
+
+
   return (
     <>
       <PageHead site={site} title={title} />
+
+      {isLiteMode && <BodyClassName className='notion-lite' />}
+      {isDarkMode && <BodyClassName className='dark-mode' />}
 
       <div className={styles.container}>
         <main className={styles.main}>

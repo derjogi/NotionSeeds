@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Link from 'next/link'
-import styles from './styles.module.css'
-import Nav from '../lib/navigation.json'
+import navStyle from './navigation.module.css'
+import hierarchy from '../lib/navigation.json'
 import { useRouter } from 'next/router'
 // import { isDev } from '../lib/config'
 import { FaBars } from '@react-icons/all-files/fa/FaBars'
@@ -16,8 +16,8 @@ interface SingleLink {
 
 const ToggleIcon = ({show, ...parentProps}) => {
   return (
-    <div className={styles.toggleArrow} {...parentProps}>
-      <svg width="12" height="10" className={show?styles.toggleExpanded:styles.toggleCollapsed}>
+    <div className={navStyle.toggleArrow} {...parentProps}>
+      <svg width="12" height="10" className={show?navStyle.toggleExpanded:navStyle.toggleCollapsed}>
         <polygon fill="currentColor" points="0,0 12,0 6,10"/>
       </svg>
     </div>
@@ -25,14 +25,15 @@ const ToggleIcon = ({show, ...parentProps}) => {
 }
 
 export const Navigation: React.FC<{
-  collapsed: boolean
-}> = ({ collapsed}) => {
-  const [navOpen, setNavOpen] = React.useState(collapsed);
+  collapsed: boolean,
+  className: string
+}> = ({ collapsed, className}) => {
+  const [navOpen, setShowNav] = React.useState(collapsed);
   const [subMenusToShow, updateList] = React.useState([]);
 
   const router = useRouter()
 
-  const toggleMenu = (whatToToggle) => {
+  const toggleSubMenu = (whatToToggle) => {
     console.log('Subs: ', subMenusToShow)
     const text = whatToToggle
 
@@ -52,7 +53,7 @@ export const Navigation: React.FC<{
   }
 
   function createNavigation() {
-    const mainNavLvl:SingleLink[] = Nav[0].subs
+    const mainNavLvl:SingleLink[] = hierarchy[0].subs
 
     function processLinksAt(navLevel:SingleLink[], lvl:number) {
       return navLevel.map((link, i) => {
@@ -61,16 +62,16 @@ export const Navigation: React.FC<{
         const displayName = link.displayName ? link.displayName : link.name
         const icon = link.icon.endsWith(".png") ? (<img src={link.icon} width={32} alt={"🫥"}/>) : link.icon
         const iconAndOptionalName = (
-          <a className={styles.clickable}>
-            <span className={styles.icon}>{icon}</span>
-            {navOpen? (<span className={styles.linkName}>{displayName}</span>) : ""}
+          <a className={navStyle.clickable}>
+            <span className={navStyle.icon}>{icon}</span>
+            <span className={navStyle.linkName}>{displayName}</span>
           </a>
         )
         if (!link.subs) {
           return (
             <li key={i}>
               <Link href={target}>
-                <div className={`${styles.linkLine} ${styles.clickable} ${isActiveLink?styles.activeLink:null}`}>
+                <div className={`${navStyle.linkLine} ${navStyle.clickable} ${isActiveLink?navStyle.activeLink:null}`}>
                   {iconAndOptionalName}
                 </div>
               </Link>
@@ -79,19 +80,19 @@ export const Navigation: React.FC<{
         } else {
           const show = subMenusToShow.includes(displayName)
           return (
-            <li key={i} className={isActiveLink ? styles.activeCategory : ''}>
+            <li key={i} className={isActiveLink ? navStyle.activeCategory : ''}>
               <Link href={target}>
-                <div className={`${styles.linkLine} ${styles.clickable} ${isActiveLink?styles.activeLink:''}`}>
+                <div className={`${navStyle.linkLine} ${navStyle.clickable} ${isActiveLink?navStyle.activeLink:''}`}>
                   {iconAndOptionalName}
-                  <span className={styles.expander}>
+                  <span className={navStyle.expander}>
                     <ToggleIcon show={show} onClick={(event) => {
                         event.preventDefault()
-                        toggleMenu(displayName)
+                        toggleSubMenu(displayName)
                       }} />
                   </span>
                 </div>
               </Link>
-              <ul className={`${show ? '' : styles.hide} ${isActiveLink ? styles.activeCategory : ''}`}>
+              <ul className={`${show ? '' : navStyle.hide} ${isActiveLink ? navStyle.activeCategory : ''}`}>
                 {processLinksAt(link.subs, lvl + 1)}
               </ul>
             </li>
@@ -111,15 +112,15 @@ export const Navigation: React.FC<{
     )
   }
 
-  const links = createNavigation()
+  const navigation = createNavigation()
 
   function creatTitle(link: SingleLink) {
     const displayName = link.displayName ? link.displayName : link.name
-    const icon = link.icon.endsWith(".png") ? (<img className={styles.imageAsIcon} src={link.icon} width={32} alt={"🫥"}/>) : link.icon
+    const icon = link.icon.endsWith(".png") ? (<img className={navStyle.imageAsIcon} src={link.icon} width={32} alt={"🫥"}/>) : link.icon
     const iconAndOptionalName = (
-      <a><h2>
-        <span className={styles.icon}>{icon}</span>
-        {navOpen? (<span className={styles.linkName}>{displayName}</span>) : ""}
+      <a><h2 className={`${navStyle.title} ${navStyle.linkLine}`}>
+        <span className={navStyle.icon}>{icon}</span>
+        <span className={navStyle.linkName}>{displayName}</span>
       </h2></a>
     )
     return (
@@ -129,12 +130,14 @@ export const Navigation: React.FC<{
     )
   }
 
-  const title = creatTitle(Nav[0])
+  const title = creatTitle(hierarchy[0])
   return (
-    <div className={`${styles.navigation} ${navOpen?styles.open:null} light-mode`}>
-      <div className={styles.menu}><a onClick={() => setNavOpen(!navOpen)}><FaBars/></a></div>
-      {title}
-      {links}
+    <div className={`${navStyle.navigation} ${navOpen?navStyle.open:navStyle.closed} light-mode ${className}`}>
+      <div className={navStyle.menu}><a onClick={() => setShowNav(!navOpen)}><FaBars/></a></div>
+      <div className={navOpen?'':navStyle.hide}>
+        {title}
+        {navigation}
+      </div>
     </div>
   )
 }

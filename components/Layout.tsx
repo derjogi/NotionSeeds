@@ -5,8 +5,8 @@ import styles from './styles.module.css'
 
 export default function Layout({ children }) {
   return (
-    <div className='main'>
-      <Navigation collapsed={true}/>
+    <div className={styles.layoutContainer}>
+      <Navigation collapsed={true} className={styles.sidebar}/>
       <div className={styles.mainContent}>
         {children}
       </div>

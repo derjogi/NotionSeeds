@@ -4,112 +4,34 @@
   }
 }
 
-.navigation {
-  --hoverColor: rgba(147, 215, 147, 0.48);
-  --activeColor: rgb(147, 215, 147);
-  --passiveColor: rgba(217, 216, 216, 0.58);
-}
-
-.navigation {
-  /*margin: 10px;*/
-  width: 100px;
-  background-color: var(--bg-color);
-  position: fixed;
+.layoutContainer {
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
   height: 100%;
-  overflow: auto;
 }
 
-.navigation .menu {
-  margin: 10px;
-  margin-left: 25px;
-  font-size: 24px;
+.sidebar {
+  flex: 0 1 300px; /* Don't grow over 300px */
+  padding-right: 50px;
+  height: 100vh;
 }
 
-.navigation.open {
-  width: 300px;
-}
+@media only screen and (max-width: 566px) {
+  .sidebar {
+    flex: 0 1;
+    padding-right: 30px;
+  }
 
-.navigation .clickable {
-  cursor: pointer;
-}
-
-.hide {
-  display:none!important
-}
-
-.navigation ul {
-  padding-inline-start: 20px;  /* padding for each level */
-  line-height: 60px;
-}
-
-.navigation ul li {
-  list-style: none;
-}
-
-.navigation ul li ul {
-  list-style: none;
-  /* Making a horizontal 'structure' line: */
-  border-left: 2px solid;
-  border-left-color: var(--passiveColor);
-}
-
-.navigation .activeCategory ul {
-  border-left-color: var(--activeColor);
-}
-
-.navigation .linkLine {
-  opacity: 1.0;
-}
-
-.navigation .linkLine:hover {
-  opacity: 1.0;
-  background-color: var(--hoverColor);
-}
-
-.navigation .linkLine:hover .icon {
-  -webkit-filter: grayscale(0%); /* Safari 6.0 - 9.0 */
-  filter: grayscale(0%);
-}
-
-.toggleCollapsed {
-  transform: rotate(-90deg);
-}
-
-.navigation .activeLink {
-  background-color: var(--activeColor);
-}
-
-.navigation .icon {
-  padding-left: 5px;
-  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
-  filter: grayscale(100%);
-}
-
-.navigation .activeLink .icon {
-  -webkit-filter: grayscale(0%); /* Safari 6.0 - 9.0 */
-  filter: grayscale(0%);
-}
-
-.navigation .imageAsIcon {
-  vertical-align: middle;
-}
-
-.navigation .linkName {
-  padding-left: 10px;
-}
-
-.navigation .expander {
-  float: right;
-  margin-right: 10px;
-}
-
-.navigation .toggleArrow {
-  color: var(--fg-color);
+  .layoutContainer {
+    flex-direction: column;
+  }
 }
 
 .mainContent {
-  margin-left: 300px;
-  height: 1000px;
+  flex: 5;
+  overflow-y: auto;
+  height: 100vh;
 }
 
 .container {
@@ -125,8 +47,8 @@
 
   font-size: 16px;
   line-height: 1.5;
-  color: rgb(55, 53, 47);
-  caret-color: rgb(55, 53, 47);
+  color: var(--fg-color);
+  caret-color: var(--fg-color);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica,
     'Apple Color Emoji', Arial, sans-serif, 'Segoe UI Emoji', 'Segoe UI Symbol';
 }
@@ -263,51 +185,6 @@
 
 .pageActions a:hover {
   transition: all 50ms ease-out;
-}
-
-.likeTweet:hover {
-  background: #f6e3e8;
-  color: #e0265e;
-}
-
-.retweet:hover {
-  color: #19bf64;
-  background: #e5f2e8;
-}
-
-@media (max-width: 1360px) {
-  .githubCorner {
-    display: none;
-  }
-}
-
-.githubCorner:hover .octoArm {
-  animation: octocat-wave 560ms ease-in-out;
-}
-
-@keyframes octocat-wave {
-  0%,
-  100% {
-    transform: rotate(0);
-  }
-  20%,
-  60% {
-    transform: rotate(-25deg);
-  }
-  40%,
-  80% {
-    transform: rotate(10deg);
-  }
-}
-
-@media (max-width: 500px) {
-  .githubCorner:hover .octoArm {
-    animation: none;
-  }
-
-  .githubCorner .octoArm {
-    animation: octocat-wave 560ms ease-in-out;
-  }
 }
 
 .hidden {

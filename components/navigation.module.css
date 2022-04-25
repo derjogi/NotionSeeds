@@ -1,0 +1,108 @@
+.navigation { /* Color Vars */
+  --hoverColor: rgba(147, 215, 147, 0.48);
+  --activeColor: rgb(147, 215, 147);
+  --passiveColor: rgba(217, 216, 216, 0.58);
+}
+
+.navigation {
+  background-color: var(--bg-color);
+}
+
+.navigation .menu {
+  margin: 10px;
+  margin-left: 25px;
+  font-size: 24px;
+}
+
+.navigation.closed {
+  flex: 0 0 50px;
+}
+
+.navigation .clickable {
+  cursor: pointer;
+}
+
+.hide {
+  display:none!important
+}
+
+.navigation .title {
+  text-align: center;
+}
+
+/*.navigation .title :hover {*/
+/*  background-color: var(--hoverColor);*/
+/*  padding-top: 20px;*/
+/*  padding-bottom: 20px;*/
+/*}*/
+
+.navigation ul {
+  padding-inline-start: 20px;  /* padding for each level */
+}
+
+.navigation ul li {
+  list-style: none;
+}
+
+.navigation ul li ul {
+  list-style: none;
+  /* Making a horizontal 'structure' line: */
+  border-left: 2px solid;
+  border-left-color: var(--passiveColor);
+}
+
+.navigation .activeCategory ul {
+  border-left-color: var(--activeColor);
+}
+
+.navigation .linkLine {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.navigation .linkLine:hover {
+  background-color: var(--hoverColor);
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.navigation .linkLine:hover .icon {
+  -webkit-filter: grayscale(0%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(0%);
+}
+
+.toggleCollapsed {
+  transform: rotate(-90deg);
+}
+
+.navigation .activeLink {
+  background-color: var(--activeColor);
+}
+
+.navigation .icon {
+  padding-left: 5px;
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
+}
+
+.navigation .activeLink .icon {
+  -webkit-filter: grayscale(0%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(0%);
+}
+
+.navigation .imageAsIcon {
+  vertical-align: middle;
+}
+
+.navigation .linkName {
+  padding-left: 10px;
+}
+
+.navigation .expander {
+  float: right;
+  margin-right: 10px;
+}
+
+.navigation .toggleArrow {
+  color: var(--fg-color);
+}

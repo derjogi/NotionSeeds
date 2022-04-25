@@ -52,17 +52,17 @@
               {
                 "name": "Regenerative",
                 "icon": "🐝",
-                "id": "regen"
+                "id": "0ee38e2e42974cd6bec3402984bc29f3"
               },
               {
                 "name": "Competitive",
                 "icon": "🐍",
-                "id": "compet",
+                "id": "ec53cbd93cde4dccae4cf5a65e753671",
                 "subs": [
                   {
                     "name": "Some more showing",
                     "icon": "🐣",
-                    "id": "asudab",
+                    "id": "4fad61007d6a4926b3cc1ea507eb1a18",
                     "subs": [
                       {
                         "name": "And even more",
