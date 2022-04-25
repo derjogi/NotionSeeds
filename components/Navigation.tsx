@@ -5,8 +5,6 @@ import Nav from '../lib/navigation.json'
 import { useRouter } from 'next/router'
 // import { isDev } from '../lib/config'
 import { FaBars } from '@react-icons/all-files/fa/FaBars'
-import {FaChevronDown} from "@react-icons/all-files/fa/FaChevronDown";
-import {FaChevronRight} from "@react-icons/all-files/fa/FaChevronRight";
 
 interface SingleLink {
   name: string
