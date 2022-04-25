@@ -8,14 +8,14 @@
   background-color: var(--bg-color);
 }
 
-.navigation .menu {
-  margin: 10px;
-  margin-left: 25px;
+.navigation .burgerMenu {
+  margin: 18px;
   font-size: 24px;
 }
 
 .navigation.closed {
-  flex: 0 0 50px;
+  flex: 0 0 40px;
+  padding-right: 0;
 }
 
 .navigation .clickable {

@@ -12,9 +12,10 @@
 }
 
 .sidebar {
-  flex: 0 1 300px; /* Don't grow over 300px */
+  flex: 0 1 300px;
   padding-right: 50px;
   height: 100vh;
+  overflow: auto;
 }
 
 @media only screen and (max-width: 566px) {
