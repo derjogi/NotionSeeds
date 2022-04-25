@@ -79,9 +79,9 @@ export const Navigation: React.FC<{
         } else {
           const show = subMenusToShow.includes(displayName)
           return (
-            <li key={i}>
+            <li key={i} className={isActiveLink ? styles.activeCategory : ''}>
               <Link href={target}>
-                <div className={`${styles.linkLine} ${styles.clickable} ${isActiveLink?styles.activeLink:null}`}>
+                <div className={`${styles.linkLine} ${styles.clickable} ${isActiveLink?styles.activeLink:''}`}>
                   {iconAndOptionalName}
                   <span className={styles.expander}>
                     <ToggleIcon show={show} onClick={(event) => {
@@ -91,7 +91,7 @@ export const Navigation: React.FC<{
                   </span>
                 </div>
               </Link>
-              <ul className={`${show ? '' : styles.hide}`}>
+              <ul className={`${show ? '' : styles.hide} ${isActiveLink ? styles.activeCategory : ''}`}>
                 {processLinksAt(link.subs, lvl + 1)}
               </ul>
             </li>

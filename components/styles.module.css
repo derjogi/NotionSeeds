@@ -5,6 +5,12 @@
 }
 
 .navigation {
+  --hoverColor: rgba(147, 215, 147, 0.48);
+  --activeColor: rgb(147, 215, 147);
+  --passiveColor: rgba(217, 216, 216, 0.58);
+}
+
+.navigation {
   /*margin: 10px;*/
   width: 100px;
   background-color: var(--bg-color);
@@ -32,12 +38,7 @@
 }
 
 .navigation ul {
-  padding-inline-start: 20px;  /*padding for each level
-                                Todo: this makes background highlighting
-                                 for selected elements start at 20px,
-                                 but optimally that should start at 0.
-                                 How to do that? Set padding here to 0
-                                 and therefor indent each li/line separately?*/
+  padding-inline-start: 20px;  /* padding for each level */
   line-height: 60px;
 }
 
@@ -49,7 +50,11 @@
   list-style: none;
   /* Making a horizontal 'structure' line: */
   border-left: 2px solid;
-  border-left-color: #d9d8d8;
+  border-left-color: var(--passiveColor);
+}
+
+.navigation .activeCategory ul {
+  border-left-color: var(--activeColor);
 }
 
 .navigation .linkLine {
@@ -58,7 +63,12 @@
 
 .navigation .linkLine:hover {
   opacity: 1.0;
-  background-color: #b0ceb0; /* placeholder for now */
+  background-color: var(--hoverColor);
+}
+
+.navigation .linkLine:hover .icon {
+  -webkit-filter: grayscale(0%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(0%);
 }
 
 .toggleCollapsed {
@@ -66,13 +76,18 @@
 }
 
 .navigation .activeLink {
-  background-color: rgba(108, 213, 0, 0.31);
+  background-color: var(--activeColor);
 }
 
 .navigation .icon {
   padding-left: 5px;
   -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
   filter: grayscale(100%);
+}
+
+.navigation .activeLink .icon {
+  -webkit-filter: grayscale(0%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(0%);
 }
 
 .navigation .imageAsIcon {

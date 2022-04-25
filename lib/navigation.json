@@ -52,12 +52,12 @@
               {
                 "name": "Regenerative",
                 "icon": "🐝",
-                "id": "xyz"
+                "id": "regen"
               },
               {
                 "name": "Competitive",
                 "icon": "🐍",
-                "id": "xyz",
+                "id": "compet",
                 "subs": [
                   {
                     "name": "Some more showing",
