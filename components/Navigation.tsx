@@ -28,22 +28,45 @@ export const Navigation: React.FC<{
   collapsed: boolean,
   className: string
 }> = ({ collapsed, className}) => {
+  const router = useRouter()
+
+  // Keep track of the window size so we can modify the default navOpen state
+  const [width, setWidth] = React.useState(600);
+  const maxWidthToCollapseMenu = 566;
+
+  React.useEffect(() => {
+    window.addEventListener("resize", () => setWidth(window.innerWidth));
+  }, []);
+
   const [navOpen, setShowNav] = React.useState(collapsed);
   const [subMenusToShow, updateList] = React.useState([]);
 
-  const router = useRouter()
-
-  const toggleSubMenu = (whatToToggle) => {
-    console.log('Subs: ', subMenusToShow)
-    const text = whatToToggle
-
-    if (subMenusToShow.includes(text)) {
-      updateList([...subMenusToShow.filter(item => item !== text)])
+  const toggleSubMenu = (linkName) => {
+    if (subMenusToShow.includes(linkName)) {
+      updateList([...subMenusToShow.filter(item => item !== linkName)])
     } else {
-      subMenusToShow.push(text)
+      subMenusToShow.push(linkName)
       updateList([...subMenusToShow])
     }
   }
+
+  function handleLinkClick(e) {
+    // If we're at small screen size, we want to collapse the menu after a link is clicked.
+    e.target
+    if (width <= maxWidthToCollapseMenu) {
+      setShowNav(false)
+    }
+  }
+
+  // Not sure whether we actually want to toggle subs when the parent is clicked... ?
+  // If we do, it can't be un-expanded while it's active. (or at least not easily.)
+  // function showSubMenu(linkName) {
+  //   // Similar to toggle, but doesn't remove it if it's there.
+  //   if (!subMenusToShow.includes(linkName)) {
+  //     subMenusToShow.push(linkName)
+  //     updateList([...subMenusToShow])
+  //   }
+  // }
 
   function getValidLink(link: SingleLink): string {
     // if (isDev) {
@@ -60,6 +83,9 @@ export const Navigation: React.FC<{
         const target = getValidLink(link)
         const isActiveLink = router.asPath == "/"+ target
         const displayName = link.displayName ? link.displayName : link.name
+        // if (isActiveLink) {
+        //   showSubMenu(displayName)
+        // }
         const icon = link.icon.endsWith(".png") ? (<img src={link.icon} width={32} alt={"🫥"}/>) : link.icon
         const iconAndOptionalName = (
           <a className={navStyle.clickable}>
@@ -71,7 +97,7 @@ export const Navigation: React.FC<{
           return (
             <li key={i}>
               <Link href={target}>
-                <div className={`${navStyle.linkLine} ${navStyle.clickable} ${isActiveLink?navStyle.activeLink:null}`}>
+                <div className={`${navStyle.linkLine} ${navStyle.clickable} ${isActiveLink?navStyle.activeLink:''}`} onClick={(e) => handleLinkClick(e)}>
                   {iconAndOptionalName}
                 </div>
               </Link>
@@ -82,7 +108,7 @@ export const Navigation: React.FC<{
           return (
             <li key={i} className={isActiveLink ? navStyle.activeCategory : ''}>
               <Link href={target}>
-                <div className={`${navStyle.linkLine} ${navStyle.clickable} ${isActiveLink?navStyle.activeLink:''}`}>
+                <div className={`${navStyle.linkLine} ${navStyle.clickable} ${isActiveLink?navStyle.activeLink:''}`} onClick={(e) => handleLinkClick(e)}>
                   {iconAndOptionalName}
                   <span className={navStyle.expander}>
                     <ToggleIcon show={show} onClick={(event) => {
@@ -118,7 +144,7 @@ export const Navigation: React.FC<{
     const displayName = link.displayName ? link.displayName : link.name
     const icon = link.icon.endsWith(".png") ? (<img className={navStyle.imageAsIcon} src={link.icon} width={32} alt={"🫥"}/>) : link.icon
     const iconAndOptionalName = (
-      <a><h2 className={`${navStyle.title} ${navStyle.linkLine}`}>
+      <a onClick={(e) => handleLinkClick(e)}><h2 className={`${navStyle.title} ${navStyle.linkLine}`}>
         <span className={navStyle.icon}>{icon}</span>
         <span className={navStyle.linkName}>{displayName}</span>
       </h2></a>
