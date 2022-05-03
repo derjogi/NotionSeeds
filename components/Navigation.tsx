@@ -52,8 +52,9 @@ export const Navigation: React.FC<{
 
   function handleLinkClick(e) {
     // If we're at small screen size, we want to collapse the menu after a link is clicked.
-    e.target
-    if (width <= maxWidthToCollapseMenu) {
+    // ... unless the arrow down is clicked, in which case we'd only want to trigger the expand action.
+    const toggleArrowClicked = e.target.closest(`.${navStyle.toggleArrow}`) != null
+    if (!toggleArrowClicked && width <= maxWidthToCollapseMenu) {
       setShowNav(false)
     }
   }
