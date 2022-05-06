@@ -9,7 +9,6 @@ import { useDarkMode } from 'lib/use-dark-mode'
 import { navigationStyle, navigationLinks, isSearchEnabled } from 'lib/config'
 
 import styles from 'styles/styles.module.css'
-import Link from "next/link";
 import {FiEdit3} from "@react-icons/all-files/fi/FiEdit3";
 
 const ToggleThemeButton = () => {
@@ -37,7 +36,8 @@ const ToggleThemeButton = () => {
 export const NotionPageHeader: React.FC<{
   block: types.CollectionViewPageBlock | types.PageBlock
 }> = ({ block }) => {
-  const { components, mapPageUrl } = useNotionContext()
+  const context = useNotionContext()
+  const {components, mapPageUrl} = context
 
   if (navigationStyle === 'default') {
     return <Header block={block} />
@@ -80,9 +80,9 @@ export const NotionPageHeader: React.FC<{
             .filter(Boolean)}
 
           <div className={cs('breadcrumb', 'button')}>
-            <Link href={`https://www.notion.so/seeds-explorers/${block.id.replace('/-/g', '')}`}>
+            <a href={`https://www.notion.so/seeds-explorers${mapPageUrl(block.id, context.recordMap)}`} target={'_blank'} rel={'noreferrer'}>
               <FiEdit3 size={16}/>
-            </Link>
+            </a>
           </div>
 
           <ToggleThemeButton />
