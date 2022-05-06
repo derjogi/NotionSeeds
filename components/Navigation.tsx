@@ -159,7 +159,7 @@ export const Navigation: React.FC<{
 
   const title = creatTitle(hierarchy[0])
   return (
-    <div className={`${navStyle.navigation} ${navOpen?navStyle.open:navStyle.closed} light-mode ${className}`}>
+    <div className={`${navStyle.navigation} ${navOpen?navStyle.open:navStyle.closed} notion notion-app ${className}`}>
       <div className={navStyle.burgerMenu}><a onClick={() => setShowNav(!navOpen)}><FaBars/></a></div>
       <div className={navOpen?'':navStyle.hide}>
         {title}
