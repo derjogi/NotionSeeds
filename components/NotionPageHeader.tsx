@@ -2,7 +2,7 @@ import * as React from 'react'
 import cs from 'classnames'
 import { IoSunnyOutline } from '@react-icons/all-files/io5/IoSunnyOutline'
 import { IoMoonSharp } from '@react-icons/all-files/io5/IoMoonSharp'
-import { Header, Breadcrumbs, Search, useNotionContext } from 'react-notion-x'
+import { Header, Search, useNotionContext } from 'react-notion-x'
 import * as types from 'notion-types'
 
 import { useDarkMode } from 'lib/use-dark-mode'
@@ -46,7 +46,11 @@ export const NotionPageHeader: React.FC<{
   return (
     <header className='notion-header'>
       <div className='notion-nav-header'>
-        <Breadcrumbs block={block} rootOnly={false} />
+        <div></div> {/* notion-nav-header has justify-content set to 'space-between'. This element is here to be the (empty) left element, the next one is centered, the next one right.*/}
+        <div className={'notion-title'}>
+          {/*block.properties.title  ... we actually don't want to show the title,
+          at least not as long as we can't make it really nice.*/}
+        </div>
 
         <div className='notion-nav-header-rhs breadcrumbs'>
           {navigationLinks
