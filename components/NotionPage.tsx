@@ -30,7 +30,7 @@ import { PageAside } from './PageAside'
 import { Footer } from './Footer'
 import { NotionPageHeader } from './NotionPageHeader'
 
-import styles from './styles.module.css'
+import styles from 'styles/styles.module.css'
 
 // -----------------------------------------------------------------------------
 // dynamic imports for optional components

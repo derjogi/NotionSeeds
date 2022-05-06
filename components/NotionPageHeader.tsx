@@ -8,7 +8,7 @@ import * as types from 'notion-types'
 import { useDarkMode } from 'lib/use-dark-mode'
 import { navigationStyle, navigationLinks, isSearchEnabled } from 'lib/config'
 
-import styles from './styles.module.css'
+import styles from 'styles/styles.module.css'
 import Link from "next/link";
 import {FiEdit3} from "@react-icons/all-files/fi/FiEdit3";
 

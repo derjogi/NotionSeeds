@@ -1,6 +1,6 @@
 import * as React from 'react'
 import Link from 'next/link'
-import navStyle from './navigation.module.css'
+import navStyle from 'styles/navigation.module.css'
 import hierarchy from '../lib/navigation.json'
 import { useRouter } from 'next/router'
 // import { isDev } from '../lib/config'

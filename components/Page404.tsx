@@ -3,7 +3,7 @@ import * as types from 'lib/types'
 import { PageHead } from './PageHead'
 import BodyClassName from 'react-body-classname'
 
-import styles from './styles.module.css'
+import styles from 'styles/styles.module.css'
 import { useDarkMode } from 'lib/use-dark-mode'
 import {useSearchParam} from "react-use";
 
