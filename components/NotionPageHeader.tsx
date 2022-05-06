@@ -84,7 +84,7 @@ export const NotionPageHeader: React.FC<{
             .filter(Boolean)}
 
           <div className={cs('breadcrumb', 'button')}>
-            <a href={`https://www.notion.so/seeds-explorers${mapPageUrl(block.id, context.recordMap)}`} target={'_blank'} rel={'noreferrer'}>
+            <a href={`https://www.notion.so/seeds-explorers${mapPageUrl(block.id, context.recordMap)}-${block.id}`} target={'_blank'} rel={'noreferrer'}>
               <FiEdit3 size={16}/>
             </a>
           </div>
