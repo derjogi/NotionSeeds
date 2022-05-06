@@ -1,3 +1,5 @@
+import {NavigationStyle} from "./lib/types";
+
 export default {
   // where it all starts -- the site's root Notion page (required)
   rootNotionPageId: '1a80dc8b81a84fae956979bdae7a0480',
@@ -40,5 +42,5 @@ export default {
   // }
   pageUrlOverrides: null,
 
-  navigationStyle:'custom'
+  navigationStyle: 'custom' as NavigationStyle
 }
