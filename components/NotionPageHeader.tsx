@@ -80,7 +80,7 @@ export const NotionPageHeader: React.FC<{
             .filter(Boolean)}
 
           <div className={cs('breadcrumb', 'button')}>
-            <Link href={`https://www.notion.so/seeds-explorers/${block.id.replaceAll("-", "")}`}>
+            <Link href={`https://www.notion.so/seeds-explorers/${block.id.replace('/-/g', '')}`}>
               <FiEdit3 size={16}/>
             </Link>
           </div>
