@@ -4,7 +4,7 @@ import { PageHead } from './PageHead'
 import BodyClassName from 'react-body-classname'
 
 import styles from './styles.module.css'
-import {useTheme} from "next-themes";
+import { useDarkMode } from 'lib/use-dark-mode'
 import {useSearchParam} from "react-use";
 
 export const Page404: React.FC<types.PageProps> = ({ site, pageId, error }) => {
@@ -13,8 +13,7 @@ export const Page404: React.FC<types.PageProps> = ({ site, pageId, error }) => {
   const lite = useSearchParam('lite')
   const isLiteMode = lite === 'true'
 
-  const { resolvedTheme } = useTheme()
-  const isDarkMode = resolvedTheme === 'dark'
+  const { isDarkMode } = useDarkMode()
 
 
   return (

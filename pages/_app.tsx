@@ -80,10 +80,8 @@ export default function App({ Component, pageProps }: AppProps) {
   }, [router.events])
 
   return (
-    <ThemeProvider disableTransitionOnChange>
       <Layout>
         <Component {...pageProps} />
       </Layout>
-    </ThemeProvider>
   )
 }
