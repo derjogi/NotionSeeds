@@ -31,14 +31,14 @@ export const Navigation: React.FC<{
   const router = useRouter()
 
   // Keep track of the window size so we can modify the default navOpen state
-  const [width, setWidth] = React.useState(600);
+  const [width, setWidth] = React.useState(typeof window !== 'undefined'? window.innerWidth: 566);
   const maxWidthToCollapseMenu = 566;
 
   React.useEffect(() => {
     window.addEventListener("resize", () => setWidth(window.innerWidth));
   }, []);
 
-  const [navOpen, setShowNav] = React.useState(collapsed);
+  const [navOpen, setShowNav] = React.useState(!collapsed && width>maxWidthToCollapseMenu);
   const [subMenusToShow, updateList] = React.useState([]);
 
   const toggleSubMenu = (linkName) => {

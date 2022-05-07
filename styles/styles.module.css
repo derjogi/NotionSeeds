@@ -14,20 +14,7 @@
 .sidebar {
   flex: 0 1 300px;
   padding-right: 50px;
-  height: 100vh;
   overflow: auto;
-}
-
-@media only screen and (max-width: 566px) {
-  .sidebar {
-    flex: 0 1;
-    padding-right: 30px;
-    min-height: auto; /* Overwrites 100vh from notion.css -> notion-app */
-  }
-
-  .layoutContainer {
-    flex-direction: column;
-  }
 }
 
 .mainContent {
@@ -191,4 +178,32 @@
 
 .hidden {
   visibility: hidden;
+}
+
+
+@media only screen and (max-width: 566px) {
+  .layoutContainer {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .sidebar {
+    flex: 1 1;
+    padding-right: 30px;
+    min-height: auto; /* Overwrites 100vh from notion.css -> notion-app */
+    z-index: 2;
+  }
+
+  .mainContent {
+    flex: initial;
+    height: auto;
+    position: relative;
+    top: -70px;
+    z-index: 1;
+  }
+
+  .breakrow {
+    flex-basis: 100%;
+    height: 0;
+  }
 }
