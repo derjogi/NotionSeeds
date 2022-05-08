@@ -79,6 +79,19 @@
   font-size: 14px;
 }
 
+.notion-search .searchBar .search-input {
+  caret-color: var(--fg-color)!important;
+  color: var(--fg-color)!important;
+}
+
+.notion-collection {
+  max-width: 100%!important;
+}
+
+.notion-board {
+  max-width: 100%!important;
+}
+
 .notion-collection-card {
   border-radius: 16px;
   box-shadow: none;

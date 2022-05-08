@@ -87,7 +87,7 @@ export const Navigation: React.FC<{
         // if (isActiveLink) {
         //   showSubMenu(displayName)
         // }
-        const icon = link.icon.endsWith(".png") ? (<img src={link.icon} width={32} alt={"🫥"}/>) : link.icon
+        const icon = link.icon?.endsWith(".png") ? (<img src={link.icon} width={32} alt={"🫥"}/>) : link.icon
         const iconAndOptionalName = (
           <a className={navStyle.clickable}>
             <span className={navStyle.icon}>{icon}</span>
@@ -160,7 +160,12 @@ export const Navigation: React.FC<{
   const title = creatTitle(hierarchy[0])
   return (
     <div className={`${navStyle.navigation} ${navOpen?navStyle.open:navStyle.closed} notion notion-app ${className}`}>
-      <div className={navStyle.burgerMenu}><a onClick={() => setShowNav(!navOpen)}><FaBars/></a></div>
+      <div className={navStyle.burgerMenu}>
+        <a className={`${navStyle.clickable} notion-header breadcrumb button`}
+           onClick={() => setShowNav(!navOpen)}>
+          <FaBars/>
+        </a>
+      </div>
       <div className={navOpen?'':navStyle.hide}>
         {title}
         {navigation}
