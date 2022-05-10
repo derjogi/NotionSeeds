@@ -2,24 +2,24 @@ import {NavigationStyle} from "./lib/types";
 
 export default {
   // where it all starts -- the site's root Notion page (required)
-  rootNotionPageId: '1a80dc8b81a84fae956979bdae7a0480',
+  rootNotionPageId: 'a553c404f2a6416993811455611be2e8',
 
   // if you want to restrict pages to a single notion workspace (optional)
   // (this should be a Notion ID; see the docs for how to extract this)
   rootNotionSpaceId: null,
 
   // basic site info (required)
-  name: 'Seeds',
+  name: 'The Project',
   domain: 'localhost',
-  author: 'SEEDS Collective',
+  author: 'The Team',
 
   // Navigation: should the first item be displayed as Title (e.g. as a main 'Home' link?)
   displayFirstLinkAsTitle: true,
 
   // open graph metadata (optional)
-  description: 'SEEDS - for a regenerative world',
-  socialImageTitle: 'SEEDS',
-  socialImageSubtitle: 'Hello World! 👋',
+  description: 'The Project',
+  socialImageTitle: 'The Project',
+  socialImageSubtitle: 'Hello Projectors! 👋',
 
   // default notion icon and cover images for site-wide consistency (optional)
   // page-specific values will override these site-wide defaults

@@ -52,6 +52,7 @@ export const author: string = getSiteConfig('author')
 export const domain: string = getSiteConfig('domain')
 export const description: string = getSiteConfig('description', 'Notion Blog')
 export const language: string = getSiteConfig('language', 'en')
+export const displayFirstLinkAsTitle: boolean = getSiteConfig('displayFirstLinkAsTitle', false)
 
 // social accounts
 export const twitter: string | null = getSiteConfig('twitter', null)

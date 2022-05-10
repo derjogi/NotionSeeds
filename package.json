@@ -1,10 +1,10 @@
 {
-  "name": "nextjs-notion-starter-kit",
+  "name": "nextjs-notion-with-sidebar-starter-kit",
   "version": "2.0.0",
   "private": true,
   "description": "The perfect starter kit for building beautiful websites with Next.js and Notion.",
-  "author": "Travis Fischer <travis@transitivebullsh.it>",
-  "repository": "transitive-bullshit/nextjs-notion-starter-kit",
+  "author": "Travis Fischer <travis@transitivebullsh.it>, refined by SEEDS",
+  "repository": "derjogi/NotionSeeds",
   "license": "MIT",
   "engines": {
     "node": ">=14.17"
