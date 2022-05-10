@@ -1,9 +1,9 @@
 import * as React from 'react'
 import Link from 'next/link'
 import navStyle from 'styles/navigation.module.css'
-import hierarchy from '../lib/navigation.json'
+import navLinks from '../navigation.json'
 import { useRouter } from 'next/router'
-// import { isDev } from '../lib/config'
+import { displayFirstLinkAsTitle } from '../lib/config'
 import { FaBars } from '@react-icons/all-files/fa/FaBars'
 
 interface SingleLink {
@@ -50,102 +50,102 @@ export const Navigation: React.FC<{
     }
   }
 
-  function handleLinkClick(e) {
+  // Not sure whether we actually want to toggle subs when the parent is clicked... ?
+  // Let's have it as an easy to tweak constant.
+  const toggleSubMenuOnArrowOnly = false
+
+  function handleLinkLineClick(e, displayName: string) {
     // If we're at small screen size, we want to collapse the menu after a link is clicked.
     // ... unless the arrow down is clicked, in which case we'd only want to trigger the expand action.
     const toggleArrowClicked = e.target.closest(`.${navStyle.toggleArrow}`) != null
     if (!toggleArrowClicked && width <= maxWidthToCollapseMenu) {
       setShowNav(false)
     }
+    if (!toggleSubMenuOnArrowOnly) {
+      toggleSubMenu(displayName)
+    }
   }
 
-  // Not sure whether we actually want to toggle subs when the parent is clicked... ?
-  // If we do, it can't be un-expanded while it's active. (or at least not easily.)
-  // function showSubMenu(linkName) {
-  //   // Similar to toggle, but doesn't remove it if it's there.
-  //   if (!subMenusToShow.includes(linkName)) {
-  //     subMenusToShow.push(linkName)
-  //     updateList([...subMenusToShow])
-  //   }
-  // }
+  function handleToggleIconClick(e, displayName: string) {
+    e.preventDefault()
+    if (toggleSubMenuOnArrowOnly) {
+      // if this is false then toggling will happen in the LinkLine handler
+      toggleSubMenu(displayName)
+    }
+  }
 
   function getValidLink(link: SingleLink): string {
-    // if (isDev) {
     return link.id
-    // }
-    // return link.name.toLowerCase().replace(/\+/g, '').replace(/\s+/g, '-')
+  }
+
+  function getIcon(link: SingleLink) {
+    const icon = link.icon?.endsWith(".png") ? (
+      <img className={navStyle.imageAsIcon} src={link.icon} width={32} alt={"🫥"}/>) : link.icon
+    return icon;
+  }
+
+  function processLinksAt(navLevel:SingleLink[], lvl:number) {
+    return navLevel.map((link, i) => {
+      const target = getValidLink(link)
+      const isActiveLink = router.asPath == "/"+ target
+      const displayName = link.displayName ? link.displayName : link.name
+      const icon = getIcon(link)
+      const iconAndOptionalName = (
+        <a className={navStyle.clickable}>
+          <span className={navStyle.icon}>{icon}</span>
+          <span className={navStyle.linkName}>{displayName}</span>
+        </a>
+      )
+      if (!link.subs) {
+        return (
+          <li key={i}>
+            <Link href={target}>
+              <div className={`${navStyle.linkLine} ${navStyle.clickable} ${isActiveLink?navStyle.activeLink:''}`} onClick={(e) => handleLinkLineClick(e, displayName)}>
+                {iconAndOptionalName}
+              </div>
+            </Link>
+          </li>
+        )
+      } else {
+        const show = subMenusToShow.includes(displayName)
+        return (
+          <li key={i} className={isActiveLink ? navStyle.activeCategory : ''}>
+            <Link href={target}>
+              <div className={`${navStyle.linkLine} ${navStyle.clickable} ${isActiveLink?navStyle.activeLink:''}`} onClick={(e) => handleLinkLineClick(e, displayName)}>
+                {iconAndOptionalName}
+                <span className={navStyle.expander}>
+                    <ToggleIcon show={show} onClick={(e) => handleToggleIconClick(e, displayName)} />
+                  </span>
+              </div>
+            </Link>
+            <ul className={`${show ? '' : navStyle.hide} ${isActiveLink ? navStyle.activeCategory : ''}`}>
+              {processLinksAt(link.subs, lvl + 1)}
+            </ul>
+          </li>
+        )
+      }
+    })
   }
 
   function createNavigation() {
-    const mainNavLvl:SingleLink[] = hierarchy[0].subs
-
-    function processLinksAt(navLevel:SingleLink[], lvl:number) {
-      return navLevel.map((link, i) => {
-        const target = getValidLink(link)
-        const isActiveLink = router.asPath == "/"+ target
-        const displayName = link.displayName ? link.displayName : link.name
-        // if (isActiveLink) {
-        //   showSubMenu(displayName)
-        // }
-        const icon = link.icon?.endsWith(".png") ? (<img src={link.icon} width={32} alt={"🫥"}/>) : link.icon
-        const iconAndOptionalName = (
-          <a className={navStyle.clickable}>
-            <span className={navStyle.icon}>{icon}</span>
-            <span className={navStyle.linkName}>{displayName}</span>
-          </a>
-        )
-        if (!link.subs) {
-          return (
-            <li key={i}>
-              <Link href={target}>
-                <div className={`${navStyle.linkLine} ${navStyle.clickable} ${isActiveLink?navStyle.activeLink:''}`} onClick={(e) => handleLinkClick(e)}>
-                  {iconAndOptionalName}
-                </div>
-              </Link>
-            </li>
-          )
-        } else {
-          const show = subMenusToShow.includes(displayName)
-          return (
-            <li key={i} className={isActiveLink ? navStyle.activeCategory : ''}>
-              <Link href={target}>
-                <div className={`${navStyle.linkLine} ${navStyle.clickable} ${isActiveLink?navStyle.activeLink:''}`} onClick={(e) => handleLinkClick(e)}>
-                  {iconAndOptionalName}
-                  <span className={navStyle.expander}>
-                    <ToggleIcon show={show} onClick={(event) => {
-                        event.preventDefault()
-                        toggleSubMenu(displayName)
-                      }} />
-                  </span>
-                </div>
-              </Link>
-              <ul className={`${show ? '' : navStyle.hide} ${isActiveLink ? navStyle.activeCategory : ''}`}>
-                {processLinksAt(link.subs, lvl + 1)}
-              </ul>
-            </li>
-          )
-        }
-      })
-    }
-
+    const mainNavLvl:SingleLink[] = displayFirstLinkAsTitle ? navLinks[0]?.subs : navLinks
+    const links = processLinksAt(mainNavLvl, 0);
     return (
       <nav>
         <ul>
           <div>
-            {processLinksAt(mainNavLvl, 0)}
+            {links}
           </div>
         </ul>
       </nav>
     )
   }
 
-  const navigation = createNavigation()
-
   function creatTitle(link: SingleLink) {
     const displayName = link.displayName ? link.displayName : link.name
-    const icon = link.icon.endsWith(".png") ? (<img className={navStyle.imageAsIcon} src={link.icon} width={32} alt={"🫥"}/>) : link.icon
+    const icon = getIcon(link);
     const iconAndOptionalName = (
-      <a onClick={(e) => handleLinkClick(e)}><h2 className={`${navStyle.title} ${navStyle.linkLine}`}>
+      <a onClick={(e) => handleLinkLineClick(e, displayName)}><h2 className={`${navStyle.title} ${navStyle.linkLine}`}>
         <span className={navStyle.icon}>{icon}</span>
         <span className={navStyle.linkName}>{displayName}</span>
       </h2></a>
@@ -157,7 +157,8 @@ export const Navigation: React.FC<{
     )
   }
 
-  const title = creatTitle(hierarchy[0])
+  const title = creatTitle(navLinks[0])
+  const navigation = createNavigation()
   return (
     <div className={`${navStyle.navigation} ${navOpen?navStyle.open:navStyle.closed} notion notion-app ${className}`}>
       <div className={navStyle.burgerMenu}>

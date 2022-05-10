@@ -13,6 +13,9 @@ export default {
   domain: 'localhost',
   author: 'SEEDS Collective',
 
+  // Navigation: should the first item be displayed as Title (e.g. as a main 'Home' link?)
+  displayFirstLinkAsTitle: true,
+
   // open graph metadata (optional)
   description: 'SEEDS - for a regenerative world',
   socialImageTitle: 'SEEDS',
