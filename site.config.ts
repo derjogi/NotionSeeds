@@ -6,11 +6,11 @@ export default {
 
   // if you want to restrict pages to a single notion workspace (optional)
   // (this should be a Notion ID; see the docs for how to extract this)
-  rootNotionSpaceId: null,
+  // rootNotionSpaceId: 'd56ea3a9-ac50-40dc-b77a-a59febed8ea9',
 
   // basic site info (required)
   name: 'Seeds',
-  domain: 'localhost',
+  domain: 'notion-seeds.vercel.app',
   author: 'SEEDS Collective',
 
   // Navigation: should the first item be displayed as Title (e.g. as a main 'Home' link?)
@@ -33,17 +33,15 @@ export default {
   // whether or not redis is enabled for caching generated preview images (optional)
   // NOTE: if you enable redis, you need to set the `REDIS_HOST` and `REDIS_PASSWORD`
   // environment variables. see the readme for more info
-  isRedisEnabled: false,
+  isRedisEnabled: true,
 
   // map of notion page IDs to URL paths (optional)
   // any pages defined here will override their default URL paths
   // example:
   //
-  // pageUrlOverrides: {
-  //   '/foo': '067dd719a912471ea9a3ac10710e7fdf',
-  //   '/bar': '0be6efce9daf42688f65c76b89f8eb27'
-  // }
-  pageUrlOverrides: null,
+  pageUrlOverrides: {
+    '/metagame-home': 'https://notion.so/7e28e75f3c264c7b939eaaa2239b9c28',
+  },
 
   navigationStyle: 'custom' as NavigationStyle
 }

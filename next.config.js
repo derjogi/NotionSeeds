@@ -12,8 +12,8 @@ module.exports = withBundleAnalyzer({
       'images.unsplash.com',
       'pbs.twimg.com',
       'abs.twimg.com',
-      's3.us-west-2.amazonaws.com',
-      'transitivebullsh.it'
+      's3.us-west-2.amazonaws.com'
+      // Add your own here if you want for faster image loading
     ],
     formats: ['image/avif', 'image/webp'],
     dangerouslyAllowSVG: true,
