@@ -46,7 +46,6 @@ export const Navigation: React.FC<{
       setWidth(window.innerWidth)
       setShowNav(window.innerWidth > maxWidthToCollapseMenu)
     });
-    console.log('Width from inside useEffect: ', width)
   }, [setWidth, width]);
 
   const toggleSubMenu = (linkName) => {
