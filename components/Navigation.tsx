@@ -1,11 +1,11 @@
 import * as React from 'react'
+import {useEffect, useState} from 'react'
 import Link from 'next/link'
 import navStyle from 'styles/navigation.module.css'
 import navLinks from '../navigation.json'
-import { useRouter } from 'next/router'
-import { displayFirstLinkAsTitle } from '../lib/config'
-import { FaBars } from '@react-icons/all-files/fa/FaBars'
-import {useEffect, useState} from "react";
+import {useRouter} from 'next/router'
+import {displayFirstLinkAsTitle} from '../lib/config'
+import {FaBars} from '@react-icons/all-files/fa/FaBars'
 
 interface SingleLink {
   name: string
@@ -87,9 +87,8 @@ export const Navigation: React.FC<{
   }
 
   function getIcon(link: SingleLink) {
-    const icon = link.icon?.endsWith(".png") ? (
-      <img className={navStyle.imageAsIcon} src={link.icon} width={32} alt={"🫥"}/>) : link.icon
-    return icon;
+    return link.icon?.endsWith(".png") ? (
+      <img className={navStyle.imageAsIcon} src={link.icon} width={32} alt={"🫥"}/>) : link.icon;
   }
 
   function processLinksAt(navLevel:SingleLink[], lvl:number) {
