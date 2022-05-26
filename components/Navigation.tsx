@@ -5,6 +5,7 @@ import navLinks from '../navigation.json'
 import { useRouter } from 'next/router'
 import { displayFirstLinkAsTitle } from '../lib/config'
 import { FaBars } from '@react-icons/all-files/fa/FaBars'
+import {useEffect, useState} from "react";
 
 interface SingleLink {
   name: string
@@ -31,15 +32,22 @@ export const Navigation: React.FC<{
   const router = useRouter()
 
   // Keep track of the window size so we can modify the default navOpen state
-  const [width, setWidth] = React.useState(typeof window !== 'undefined'? window.innerWidth: 566);
+  const [width, setWidth] = useState<number>();
   const maxWidthToCollapseMenu = 566;
+  const [navOpen, setShowNav] = useState(!collapsed && width>maxWidthToCollapseMenu);
+  const [subMenusToShow, updateList] = useState([]);
 
-  React.useEffect(() => {
-    window.addEventListener("resize", () => setWidth(window.innerWidth));
-  }, []);
-
-  const [navOpen, setShowNav] = React.useState(!collapsed && width>maxWidthToCollapseMenu);
-  const [subMenusToShow, updateList] = React.useState([]);
+  useEffect(() => {
+    if (!width) {
+      setWidth(window.innerWidth)
+      setShowNav(window.innerWidth > maxWidthToCollapseMenu)
+    }
+    window.addEventListener("resize", () => {
+      setWidth(window.innerWidth)
+      setShowNav(window.innerWidth > maxWidthToCollapseMenu)
+    });
+    console.log('Width from inside useEffect: ', width)
+  }, [setWidth, width]);
 
   const toggleSubMenu = (linkName) => {
     if (subMenusToShow.includes(linkName)) {
