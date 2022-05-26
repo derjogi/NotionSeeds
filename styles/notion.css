@@ -225,7 +225,7 @@
   }
 }
 
-.notion-block-ab9a258d6cf444f3bb40dc2600feae91 .notion-page-link {
+.notion-page-link {
   justify-content: center;
   padding: 2em;
 }
@@ -397,10 +397,10 @@
   border-image-slice: 1;
 }
 
-.notion-block-ab9a258d6cf444f3bb40dc2600feae91 .notion-column {
+.notion-column {
   padding: 0;
 }
 
-.notion-block-260baa77f1e1428b97fb14ac99c7c385 {
-  display: none;
+.notion-page-scroller {
+  min-height: calc(97vh - var(--notion-header-height));
 }
