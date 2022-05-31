@@ -34,6 +34,8 @@ import {
   posthogId,
   posthogConfig
 } from 'lib/config'
+import App from "next/app";
+import {getSiteMap} from "../lib/get-site-map";
 
 if (!isServer) {
   bootstrap()
@@ -50,7 +52,7 @@ if (!isServer) {
 //   }
 // })()
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function MyApp({ Component, pageProps }: AppProps, hierarchy) {
   const router = useRouter()
 
   React.useEffect(() => {
@@ -80,8 +82,22 @@ export default function App({ Component, pageProps }: AppProps) {
   }, [router.events])
 
   return (
-      <Layout>
+      <Layout hierarchy={hierarchy}>
         <Component {...pageProps} />
       </Layout>
   )
 }
+
+MyApp.getInitialProps = async (appContext) => {
+  // calls page's `getInitialProps` and fills `appProps.pageProps`
+  const appProps = await App.getInitialProps(appContext);
+
+  if (typeof window === 'undefined') { // can only call this server-side
+    return {...appProps, hierarchy: {}}
+  }
+  const hierarchy = await getSiteMap();
+  console.log("SiteMap Hierarchy: ", hierarchy)
+
+  return {...appProps, hierarchy: hierarchy}
+}
+

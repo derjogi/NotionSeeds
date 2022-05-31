@@ -26,10 +26,15 @@ const ToggleIcon = ({show, ...parentProps}) => {
 }
 
 export const Navigation: React.FC<{
+  hierarchy: any, // Todo
   collapsed: boolean,
   className: string
-}> = ({ collapsed, className}) => {
+}> = ({ hierarchy, collapsed, className}) => {
   const router = useRouter()
+
+  const siteMap = hierarchy;
+
+  console.log("SiteMap: ", siteMap)
 
   // Keep track of the window size so we can modify the default navOpen state
   const [width, setWidth] = useState<number>();
